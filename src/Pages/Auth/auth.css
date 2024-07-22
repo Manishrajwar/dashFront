@@ -1,0 +1,174 @@
+.loginCont{
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding: 60px;
+ max-width: 1029px;
+ gap: 20px;
+ width: 100%;
+height: 616px;
+box-shadow: 10px 8px 32px 12px #1B25330F;
+border-radius: 10px;
+margin: 10px;
+
+
+}
+.loginCont form{
+display: flex;
+flex-direction: column;
+gap: 24px;
+width: 100%;
+
+}
+
+
+.loginCont label{
+display: flex;
+flex-direction: column;
+gap: 4px;
+
+}
+.loginCont label p{
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.0025em;
+color: #666D76;    
+
+}
+.loginCont label input{
+    width: 418px;
+    height: 44px;
+    padding: 8px 16px ;
+    border-radius: 4px ;
+    background: #E8E9EB;
+    border: 1px solid #D0D4DC;    
+font-family: Inter;
+font-size: 16px;
+font-weight: 400;
+line-height: 24px;
+letter-spacing: 0.005em;
+text-align: left;
+
+}
+.loginCont form .heading{
+display: flex;
+flex-direction: column;
+gap: 4px;
+
+}
+.formgpass{
+    font-family: Inter;
+font-size: 16px;
+font-weight: 500;
+line-height: 24px;
+letter-spacing: 0.005em;
+text-align: left;
+color: #0B56E4;
+}
+
+.loginCont form button{
+    max-width: 418px;
+    width: 100%;
+    height: 46px;
+    background: #0B56E4;
+text-align: center;
+}
+.loginCont form button span{
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+color: #FFFFFF;    
+}
+
+
+.loginCont form .heading h2{
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 32px;
+ color: #1B2533;    
+
+}
+.loginCont form .heading p {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.0025em;
+color: #666D76;    
+
+}
+
+.authTogle{
+    display: flex;
+    align-items: center;
+    max-width: 270px;
+    width: 100%;
+    height: 50px;
+}
+.authTogle div{
+    width: 50%;
+    height: 100%;
+}
+
+.normalbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+font-family: Inter;
+font-size: 16px;
+font-weight: 500;
+line-height: 24px;
+letter-spacing: 0.005em;
+color: #49515C;
+border: 1px solid #B3CBF7;
+cursor: pointer;
+}
+
+.currentBar{
+    background-color: #0B56E4;
+    color: white;
+    border: none;
+
+
+}
+.loginwrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+}
+
+@media (max-width:970px) {
+    .loginCont{
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: space-between;
+        padding: 60px;
+        max-width: 870px;
+        gap: 20px;
+        width: 100%;
+       height: auto;
+       box-shadow: 10px 8px 32px 12px #1B25330F;
+       border-radius: 10px;
+       margin: 10px;
+       
+       }
+}
+@media (max-width:500px) {
+    .loginCont{
+        padding: 10px;
+    }
+    .loginCont label{
+        width: 100%;
+    }
+    .loginCont label input{
+        width: 100%;
+
+    }
+}

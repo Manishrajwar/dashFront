@@ -1,0 +1,33 @@
+.commonWrap{
+     position: relative;
+     width: 100%;
+     min-height: 100vh;
+     background-color: #F8F9FB;
+
+}
+
+.withsidebarComonwrap{
+     display: flex;
+
+}
+
+.withnavbarcom{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.Maindashwrap{
+    width: calc(100vw - 224px);
+    min-height: 100vh;
+    padding: 20px 20px;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+@media (max-width:1150px) {
+    .Maindashwrap{
+        width: 100%;
+
+    }
+}

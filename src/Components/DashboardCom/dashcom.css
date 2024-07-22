@@ -1,0 +1,233 @@
+
+.swiper {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+  
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .singleKnow{
+    max-width: 274px;
+    width: 100%;
+height: 129px;
+padding: 24px 20px ;
+border-radius: 10px;
+ display: flex;
+ flex-direction: column;
+ cursor: pointer;
+  }
+  .knowGreen{
+    background: #DEF2EB;
+    border: 1px solid #B7DFD5;
+}
+.knowRed{
+    background: #FCEFEC;
+    border: 1px solid #F4C0B3;
+  }
+  .knowYellow{
+    border: 1px solid #FCDCB2;
+    background: #FFF5D7;
+
+  }
+  .knowBlue{
+    border: 1px solid #B3CBF7;
+        background: #D7E5FF;
+
+  }
+  .singleKnow .right{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .singleKnow .right img{
+   width: 42px;
+   height: 42px;
+  }
+  .samepara{
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.0015em;
+    text-align: left;
+color: #1B2533;    
+  }
+
+  .kowSol{
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* for timmer  */
+  .timerWrap{
+   max-width:472px;
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   gap: 26px;
+height:314px;
+padding: 20px;
+border-radius: 12px ;
+background: #FFFFFF;
+border: 1px solid #E8E9EB;
+
+  }
+  .timerWrap nav{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+  }
+  .showtimcont{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  .timerWrap nav h3{
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.0015em;
+    text-align: left;
+     color: #1B2533;
+  }
+
+  .timerWrap .notewrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .timerWrap .notewrap input{ 
+    max-width: 295px;
+    width: 100%;
+    height: 48px;
+    padding: 8px 16px ;
+    border-radius: 10px;
+    background: #FFFFFF;
+    border: 1px solid #D0D4DC;  
+font-family: Inter;
+outline: none;
+color: #B8BBC0;
+font-size: 16px;
+font-weight: 500;
+line-height: 24px;
+letter-spacing: 0.005em;
+text-align: left;
+
+  }
+  .timerWrap .notewrap button{ 
+    min-width: 134px;
+    width: fit-content;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    background: #189877;
+    border: 1px solid #189877;
+    justify-content: center;
+    
+  }
+  .timerWrap .notewrap button span{ 
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+color: white;    
+  }
+
+  .showTime{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    
+
+  }
+  .showTime div , span{
+    font-family: Inter;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 58.09px;
+    letter-spacing: 0.004em;
+    text-align: left;
+color: #2B2B2B;
+
+
+}
+
+.showTime div{
+    /* background-color: red; */
+    max-width: 60px;
+width: 100%; 
+ text-align: center;
+  }
+
+  .todaydate{
+    color: #49515C;
+font-family: Inter;
+font-size: 14px;
+font-weight: 500;
+line-height: 20px;
+letter-spacing: 0.0025em;
+
+  }
+
+  .timenewCont{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .latestAnnouceCont{
+
+    border: 1px solid black;
+    max-width: calc(100vw - 472px);
+    width: 100%;
+    height: 314px;
+  }
+
+  @media (max-width:900px) {
+    .timenewCont{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+    .latestAnnouceCont{
+      max-width: 100%;
+      width: 100%;
+    }
+    .timerWrap{
+      max-width:700px;
+      width: 100%;
+   height:314px;
+ 
+   
+     }
+  }
