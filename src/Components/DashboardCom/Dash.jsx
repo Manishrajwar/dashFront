@@ -11,12 +11,14 @@ import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import "./dashcom.css";
 import Timer from "./Timer";
+import { useSelector } from "react-redux";
 
-const user = {
-  name: "Manish singh",
-};
+
 
 function Dash() {
+
+  const {user} = useSelector((state)=>state.auth);
+
   return (
     <div className="dashwrap">
 
@@ -24,7 +26,7 @@ function Dash() {
         {/* left side */}
         <div className="navleft">
           <h2>{user?.name}</h2>
-          <p>Real-time insights and performance overview</p>
+          <p>{user?.email === "trailemail@gmail.com" ? "This is for trail You Will Not able to Edit the database":`Welcome ${user?.email}`}</p>
         </div>
 
         {/* right side */}

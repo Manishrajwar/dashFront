@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./common.css";
 import bell from "../../Assets/bell-badge 1.png";
 import byewind from "../../Assets/ByeWind.png";
-import { AppContext } from "../../Context/AppContext";
+import { useSelector } from "react-redux";
 
 function Navbar() {
-  const { user } = useContext(AppContext);
+  const { user } = useSelector((state)=>state.auth);
 
   return (
     <div className="navwrap">
