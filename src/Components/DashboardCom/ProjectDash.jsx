@@ -2,8 +2,8 @@
 import { useState , useRef  } from "react";
 import "./dashcom.css";
 
-import { Avatar } from "react-profile-avatar";
-import "react-profile-avatar/dist/index.css";
+// import { Avatar } from "react-profile-avatar";
+// import "react-profile-avatar/dist/index.css";
 import projectdot from "../../Assets/projectnav.png";
 import cross from "../../Assets/cross.png";
 import userplus from "../../Assets/bx-user-plus.png"
@@ -104,12 +104,12 @@ function ProjectDash() {
               <nav>
                 {/* left par */}
                 <div className="roboxleft">
-                  <Avatar
+                  {/* <Avatar
                     name={"John Doe"}
                     colour={"#FF0000"}
                     size={40}
                     className="avatara"
-                  />
+                  /> */}
                   <span>{project?.Name}</span>
                 </div>
                 {/* roght part  */}
