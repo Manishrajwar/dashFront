@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { makeAuthenticatedGETRequest } from "../services/serverHelper";
 import { endpoints } from "../services/api";
 import { useNavigate } from "react-router-dom";
-import { setAccessToken, setLoading, setUser } from "../reducer/slices/authSlice";
-import gridView from "../Assets/grid_view.png";
+import { setAccessToken, setUser } from "../reducer/slices/authSlice";
 
 
 

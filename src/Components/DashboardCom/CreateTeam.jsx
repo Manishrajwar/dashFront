@@ -4,7 +4,6 @@ import "./dashcom.css";
 import cross from "../../Assets/cross.png";
 import { AppContext } from "../../Context/AppContext";
 import {
-  makeAuthenticatedGETRequest,
   makeAuthenticatedPOSTRequest,
   makeAuthenticatedPUTRequest,
 } from "../../services/serverHelper";

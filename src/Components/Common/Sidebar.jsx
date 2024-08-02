@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import "./common.css";
 import { NavLink } from "react-router-dom";
-import gridView from "../../Assets/grid_view.png";
 import { AppContext } from "../../Context/AppContext";
 
 
