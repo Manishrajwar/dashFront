@@ -106,7 +106,7 @@ export default function AppContextProvider({ children }) {
       else{
         setAllInvitation([]);
       }
-  },[accessToken])
+  },[accessToken])  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(()=>{
        if(allInvitation.length > 0 ){
@@ -114,7 +114,7 @@ export default function AppContextProvider({ children }) {
        }else{
         setOpenInviPop(false);
        }
-  },[allInvitation])
+  },[allInvitation])  // eslint-disable-next-line react-hooks/exhaustive-deps
   
   useEffect(()=>{
     const currentPage =  sessionStorage.getItem("currentPage");
@@ -142,13 +142,13 @@ export default function AppContextProvider({ children }) {
          sessionStorage.setItem("currentPage" , elements[0]);
        }
     }
-  },[user])
+  },[user])  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(()=>{
      if(openNotification){
        fetchNotification();
       }
-  },[openNotification])
+  },[openNotification])  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const value = {
     changeHandler   ,setCurrPage , currentPage  ,fetchUserDetails ,logoutHandler ,user  ,dashAllowPage , fetchTeamDetails , myTeam , setMyTeam ,setOpenInviPop , openInviPop , allInvitation , setAllInvitation , allNotification , setAllNotification , openNotification , setOpenNotification , notSeenNotification , fetchNotification

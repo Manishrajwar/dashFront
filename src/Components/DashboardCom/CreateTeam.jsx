@@ -166,7 +166,7 @@ function CreateTeam() {
 
   useEffect(() => {
     fetchTeamDetails();
-  }, []);
+  }, []);  // eslint-disable-next-line react-hooks/exhaustive-deps
   
   const proNavRef = useRef(null);
   useOnClickOutside(proNavRef, () => setShowOption(null));

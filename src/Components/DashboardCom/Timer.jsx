@@ -22,7 +22,7 @@ const Timer = () => {
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, []);
+  }, []);  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const handleVisibilityChange = () => {
     if (!document.hidden) {
@@ -32,7 +32,7 @@ const Timer = () => {
 
   useEffect(() => {
     initializeTimer();
-  }, []);
+  }, []);  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const initializeTimer = () => {
     let t = localStorage.getItem("clock-in");
@@ -282,7 +282,7 @@ const Timer = () => {
     } else {
       setClockStatus("Clock-in");
     }
-  }, [clockStatus]);
+  }, [clockStatus]);  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   return (
     <div className="timerWrap">
