@@ -2,12 +2,12 @@ import frame from "../../Assets/Frame.png";
 import "./auth.css";
 import { useContext, useState } from "react";
 import { AppContext } from "../../Context/AppContext";
-import { makeAuthenticatedPOSTRequest, makeTrailUnauthenticatedPOSTRequest, makeUnauthenticatedPOSTRequest } from "../../services/serverHelper";
+import { makeTrailUnauthenticatedPOSTRequest, makeUnauthenticatedPOSTRequest } from "../../services/serverHelper";
 import { endpoints } from "../../services/api";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../reducer/slices/authSlice";
+import { setAccessToken, setUser } from "../../reducer/slices/authSlice";
  
 
 const Login = () => {
@@ -16,12 +16,13 @@ const Login = () => {
 
   const navigate =useNavigate();
 
+  const [currentLogin , setCurrentLogin] = useState("Admin");
+
 
   const [formdata, setFormdata] = useState({
     email: "",
     password: "",
     type: "Login",
-    // userType:""
   });
 
   const trailLogin = async(e)=>{
@@ -41,20 +42,48 @@ const Login = () => {
       let resp;
 
        if(formdata.type === "Login"){
-         resp = await makeUnauthenticatedPOSTRequest(endpoints.LOGIN_API , {email:formdata.email , password:formdata.password});
-           console.log("login",resp);
+         if(currentLogin === "Admin"){
+
+           resp = await makeUnauthenticatedPOSTRequest(endpoints.ADMIN_LOGIN_API , {email:formdata.email , password:formdata.password});
+           if(resp.success){
+             toast.success("Successfuly login");
+             dispatch(setUser(resp?.user));
+             dispatch(setAccessToken(resp?.token));
+             localStorage.setItem("accessToken" , JSON.stringify(resp?.token));
+             localStorage.setItem("user" ,JSON.stringify(resp?.user));
+             navigate("/dashboard");
+            }
+          }
+          else {
+            // for employe code login 
+            resp = await makeUnauthenticatedPOSTRequest(endpoints.EMPLOYEE_CODE_LOGIN_API , {employeeCode:formdata.email , password:formdata.password});
+            console.log('ans',resp);
+
+            if(resp.success){
+              toast.success("Successfuly login");
+              dispatch(setUser(resp?.user));
+              dispatch(setAccessToken(resp?.token));
+              localStorage.setItem("accessToken" , JSON.stringify(resp?.token));
+              localStorage.setItem("user" ,JSON.stringify(resp?.user));
+              navigate("/dashboard");
+             }
+             else {
+              toast.error(resp?.message);
+             }
+          }
        }
        else {
         resp = await makeUnauthenticatedPOSTRequest(endpoints.ADMIN_SIGNUP_API , {email:formdata.email , password:formdata.password});
-        console.log("login",resp);
          if(resp?.success){
+          toast.success("Successfuly registered");
+setFormdata((prev)=>({
+  ...prev ,
+  type:"Login"
+}))
 
-           localStorage.setItem("user" , JSON.stringify(resp?.user));
-           dispatch(setUser(resp.user));
-           navigate("/dashboard");
           }
           else{
-            toast.error(resp.messsage);
+            toast.error(resp.message);
           }
        }
 
@@ -73,6 +102,7 @@ const Login = () => {
         <div className="loginCont">
 
           <form onSubmit={submitHandler}>
+
             <div className="heading similarCss">
               <h2 >Sign in</h2>
               <p>to access HRMS Dashboard</p>
@@ -94,34 +124,34 @@ const Login = () => {
               }} className={`${formdata?.type === "Signup" && "currentBar"} normalbar`}>Signup</div>
             </div>
 
-            {/* fields  */}
-{/* 
-{
-  formdata.type === "Signup"  && 
-
             <label >
-              <p>As a</p>
-              <select
-                name="userType"
-                onChange={(e) => changeHandler(e, setFormdata)}
-                value={formdata.userType}
-              >
-                <option value="Employee">Employee</option>
-                <option value="Admin">Admin</option>
-              </select>
-            </label>
+              {
+                formdata?.type==="Login" ? 
+                <div className="currentLogin">
+                   <p onClick={()=>setCurrentLogin("Admin")} className={`${currentLogin === "Admin" && "crlin"}`}>Admin Email</p> <span>/</span>
+                   <p onClick={()=>setCurrentLogin("Code")} className={`${currentLogin === "Code" && "crlin"}`}>Employee Code</p>
+                </div>
+                :
+                <p>Email</p>
 
-} */}
+              }
 
-
-            <label >
-              <p>Email</p>
-              <input
-                type="email"
+              {
+                formdata?.type === "Login" ? 
+                <input
+                type={currentLogin === "Admin"?"email":"text"}
                 name="email"
                 onChange={(e) => changeHandler(e, setFormdata)}
                 value={formdata.email}
               />
+              :
+              <input
+              type="email"
+              name="email"
+              onChange={(e) => changeHandler(e, setFormdata)}
+              value={formdata.email}
+              />
+            }
             </label>
 
             <label htmlFor="">
@@ -149,9 +179,8 @@ const Login = () => {
 
 
           </form>
-
-          {/* left side */}
-          <img src={frame} alt="" />
+          
+              <img src={frame} alt="" />
 
         </div>
 

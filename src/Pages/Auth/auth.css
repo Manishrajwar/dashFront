@@ -158,6 +158,21 @@ cursor: pointer;
     width: 100%;
 }
 
+.currentLogin{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.currentLogin p{
+    cursor: pointer;
+}
+
+.crlin{
+    color: #0B56E4 !important;
+    font-weight: 600 !important;
+
+}
+
 @media (max-width:970px) {
     .loginCont{
         display: flex;

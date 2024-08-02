@@ -9,14 +9,14 @@ import ProtectedRoute from "./Pages/Auth/ProtectedRoute";
 
 function App() {
 
-   const {user}  =useSelector((state)=>state.auth);
+   const {accessToken}  =useSelector((state)=>state.auth);
    
   return (
-    <div className="App">
+    <div className="relative overflow-x-hidden">
 <Routes>
    
     {
-      !user &&  
+      !accessToken &&  
       <>
   <Route path="/login" element={<Login />}  />
   <Route path="*" element={<ProtectedRoute  />}  />
@@ -24,7 +24,7 @@ function App() {
   
     }
     {
-      user && 
+      accessToken && 
       <>
   <Route path="/dashboard" element={<Dashboard />}  />
   <Route path="*" element={<ProtectedRoute />}  />

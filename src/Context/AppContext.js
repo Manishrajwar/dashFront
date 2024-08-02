@@ -1,26 +1,43 @@
 import { createContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { makeAuthenticatedGETRequest } from "../services/serverHelper";
 import { endpoints } from "../services/api";
+import { useNavigate } from "react-router-dom";
+import { setAccessToken, setLoading, setUser } from "../reducer/slices/authSlice";
+import gridView from "../Assets/grid_view.png";
+
 
 
 export const AppContext = createContext();
 
+
 export default function AppContextProvider({ children }) {
 
-  const [currentPage, setCurrPage] = useState("Dashboard");
-  const {user}  = useSelector((state)=>state.auth);
+  const elements = ["Dashboard", "Project","Create Team"];
 
+  const [currentPage, setCurrPage] = useState("");
+  const [dashAllowPage , setDashAllowPage] = useState([]);
+  const {user , accessToken}  = useSelector((state)=>state.auth);
+  const [openInviPop , setOpenInviPop] = useState(false);
+  const [openNotification , setOpenNotification] = useState(false);
+  const [notSeenNotification , setNotSeenNotification] = useState(0);
+
+   const [allInvitation , setAllInvitation] = useState([]);
+   const [allNotification , setAllNotification] = useState([]);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const fetchUserDetails = async()=>{
      try{
  
-        const resp = await makeAuthenticatedGETRequest(endpoints.GET_USER_DETAIL_API , user?.token );
-        console.log(resp);
-         if(resp.success){
-          sessionStorage.setItem("user" , JSON.stringify(resp.user));
+        const resp = await makeAuthenticatedGETRequest(endpoints.GET_USER_DETAIL_API , accessToken );
+      
+         if(resp?.status){
+           localStorage.setItem("user" , JSON.stringify(resp?.data));
+           dispatch(setUser(resp?.data));
+          
          }
-
 
      } catch(error){
        console.log("fetchuser ",error);
@@ -37,16 +54,105 @@ export default function AppContextProvider({ children }) {
      }))
   }
 
+  const logoutHandler =()=>{
+     localStorage.removeItem("user");
+     sessionStorage.removeItem("user");
+     localStorage.removeItem("accessToken");
+      dispatch(setUser(null));
+      dispatch(setAccessToken(null));
+   navigate("/login");
+  }
+
+  const fetchNotification = async()=>{
+     const resp = await  makeAuthenticatedGETRequest(endpoints.GET_MY_NOTIFICATION_API ,accessToken);
+     console.log("caled");
+     if(resp?.success){
+      setAllNotification(resp?.notifications);
+      setNotSeenNotification(resp?.unseenCount);
+     }
+  }
+
+  const [myTeam, setMyTeam] = useState({});
+
+
+  const fetchTeamDetails = async () => {
+    const resp = await makeAuthenticatedGETRequest(
+      endpoints.GET_MY_TEAMDETAILS_API,
+      accessToken
+    );
+    if (resp?.success) {
+      setMyTeam(resp?.team);
+    } else {
+      setMyTeam("");
+    }
+  };
+
+  const getInvitation = async()=>{
+    const resp = await makeAuthenticatedGETRequest(endpoints.GET_MY_INVITATION_API , accessToken);
+    if(resp.success){
+      setAllInvitation(resp?.data);
+    }
+  }
 
   useEffect(()=>{
-     if(user){
+     if(accessToken){
        fetchUserDetails();
-      }
-  },[])
+       fetchTeamDetails();
+       fetchNotification();
+       setTimeout(()=>{
+         getInvitation();
 
+       },3000)
+      }
+      else{
+        setAllInvitation([]);
+      }
+  },[accessToken])
+
+  useEffect(()=>{
+       if(allInvitation.length > 0 ){
+        setOpenInviPop(true);
+       }else{
+        setOpenInviPop(false);
+       }
+  },[allInvitation])
+  
+  useEffect(()=>{
+    const currentPage =  sessionStorage.getItem("currentPage");
+
+    if(user?.accountType === 'Employee'){
+
+      setDashAllowPage(user?.dashboardAllow);
+       if(currentPage && user.dashboardAllow.includes(currentPage)){
+         setCurrPage(currentPage);
+       }
+       else {
+         setCurrPage(user?.dashboardAllow[0]);
+         sessionStorage.setItem("currentPage" , user?.dashboardAllow[0]);
+       }
+    } else{
+      setDashAllowPage(elements);
+
+       if(currentPage && elements.includes(currentPage)){
+         
+         setCurrPage(currentPage);
+       }
+       else {
+
+         setCurrPage(elements[0]);
+         sessionStorage.setItem("currentPage" , elements[0]);
+       }
+    }
+  },[user])
+
+  useEffect(()=>{
+     if(openNotification){
+       fetchNotification();
+      }
+  },[openNotification])
 
   const value = {
-    changeHandler   ,setCurrPage , currentPage  ,fetchUserDetails
+    changeHandler   ,setCurrPage , currentPage  ,fetchUserDetails ,logoutHandler ,user  ,dashAllowPage , fetchTeamDetails , myTeam , setMyTeam ,setOpenInviPop , openInviPop , allInvitation , setAllInvitation , allNotification , setAllNotification , openNotification , setOpenNotification , notSeenNotification , fetchNotification
   };
 
 

@@ -167,7 +167,7 @@ color: white;
     
 
   }
-  .showTime div , span{
+  .showTime div , .showTime span{
     font-family: Inter;
     font-size: 48px;
     font-weight: 700;
@@ -175,8 +175,6 @@ color: white;
     letter-spacing: 0.004em;
     text-align: left;
 color: #2B2B2B;
-
-
 }
 
 .showTime div{
@@ -296,6 +294,7 @@ cursor: pointer;
   .singleProj{
     position: relative;
     max-width:373px;
+    width: 100%;
 height: 279px;
 padding: 24px;
 border-radius: 12px ;
@@ -334,7 +333,7 @@ color: #1B2533;
 
   }
   .statusdue .staus{
-    width: 68px;
+    width: 88px;
     height: 28px;
     border-radius: 27px ;
  display: flex;
@@ -346,7 +345,7 @@ color: #1B2533;
   }
   .statusdue .staus p{
     font-family: Inter;
-    color: #121212;
+    color: red;
     font-size: 12px;
     font-weight: 500;
     line-height: 16px;
@@ -415,9 +414,18 @@ padding: 24px;
 display: flex;
 flex-direction: column;
 gap: 16px;
+background-color: white;
 border-radius: 18px ;
 }
+.incheigh{
+  /* min-height: 492px  !important; */
+  max-height: none ;
+  height: fit-content !important;
+}
 
+.increheight{
+  max-height: 570px !important;
+}
 
 .createpopcont nav{
  display: flex;
@@ -500,6 +508,16 @@ border: 1px solid #D0D4DC;
 outline: none;
 }
 
+.createpopcont form label select{ 
+  width: 100%;
+  height: 48px;
+  padding: 8px 16px ;
+  border-radius: 10px;
+  background: #FFFFFF;
+border: 1px solid #D0D4DC;
+outline: none;
+}
+
 
 .createbtns{
   display: flex;
@@ -535,7 +553,213 @@ letter-spacing: 0.005em;
 color: #666D76;
 }
 
+
+/* this is fo commone h2 element  */
+.commonh2{
+  font-family: Inter;
+  color: #101820;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  text-align: left;
   
+}
+
+.commonpara{
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+color: #666D76;  
+}
+
+.dashwrap2{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dashwrap2 nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+.dashwrap2 .ctnav1{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+ 
+.createamform{
+  width: 100%;
+  height: 48px;
+  padding: 8px 16px ;
+  border-radius: 10px;
+  background: #FFFFFF;
+border: 1px solid #D0D4DC;
+outline: none;
+
+}
+  
+
+.teamDetails{
+height: 100px;
+ width: 100%;;
+padding: 10px 16px ;
+border-radius: 10px;
+background: linear-gradient(131.78deg, #D1E8FD 6.87%, #EDEFFF 91.67%);
+border: 1px solid #0B56E4;
+display: flex;
+align-items: center;
+justify-content: space-between;
+
+}
+.teamDetails label{
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+
+
+}
+.teamDetails label h3{
+  font-family: Inter;
+  color: blue;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  
+}
+.teamDetails label p{
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+color: #296ce8;  
+}
+
+.allTeamMembers{
+  display: flex;
+  flex-wrap: wrap;
+gap: 30px;
+width: 100%;
+
+}
+
+.singleMem{
+  width: 274px;
+height: 250px;
+border-radius: 12px ;
+background: #FFFFFF;
+border: 1px solid #E8E9EB;
+padding: 10px;
+position: relative;
+display: flex;
+flex-direction: column;
+gap: 10px;
+align-items: center;
+}
+.singleMem nav{
+ width: 100%;
+display: flex;
+justify-content: flex-end;
+}
+.singleMem h3{
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 32px;
+color: #1B2533;  
+}
+.singleMem p{
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.0015em;
+color: #666D76;  
+}
+
+
+
+.empavatar {
+  width: 70px !important; 
+  height: 70px !important; 
+  border-radius: 50%;
+  object-fit: cover; 
+}
+
+.active{
+  color: #36d353 !important;
+  font-weight: 600 !important;
+
+}
+.unactive{
+  color: #F34A4A !important;
+  font-weight: 600 !important;
+}
+
+.teamIDBtns{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+}
+
+.allpageallow{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.singlepageallow{
+  display: flex;
+  align-items: center;
+  gap:4px;
+  width: auto;
+  height: 30px;
+  border-radius: 12px;
+  background: #0B56E4;
+ color: white;
+ font-weight: 500;
+ font-size: 14px;
+ padding: 10px 10px;
+}
+
+.showOption{
+  position: absolute;
+  width: 180px;
+  top: 20px;
+  right: 20px;
+height: 200px;
+border-radius: 8px;
+background: #FFFFFF;
+border: 1px solid #E3E3E3;
+box-shadow: 0px 4px 12px 0px #1A1A1A33;
+display: flex;
+flex-direction: column;
+
+}
+.showOption label{
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ cursor: pointer;
+ padding: 10px;
+
+}
+.showOption label span{
+  font-family: Inter;
+  color: #2B2B2B;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+
+}
+
   @media (max-width:900px) {
     .timenewCont{
       display: flex;
