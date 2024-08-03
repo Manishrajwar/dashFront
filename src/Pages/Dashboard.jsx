@@ -12,6 +12,8 @@ import cross from "../Assets/cross.png";
 import toast from "react-hot-toast";
 import { makeAuthenticatedDELETERequest, makeAuthenticatedPOSTRequest, makeAuthenticatedPUTRequest } from "../services/serverHelper";
 import { endpoints } from "../services/api";
+import ProjectDetails from "../Components/DashboardCom/ProjectTasks";
+import ProjectTasks from "../Components/DashboardCom/ProjectTasks";
 
 
 function Dashboard() {
@@ -70,7 +72,6 @@ function Dashboard() {
     }
     toast.dismiss(toastid);
   }
-  console.log("a",allNotification);
 
   return (
     <>
@@ -86,6 +87,7 @@ function Dashboard() {
               ? currentPage === "Project" && <ProjectEmployeeDash />
               : currentPage === "Project" && <ProjectDash />}
             {currentPage === "Create Team" && <CreateTeam />}
+            {currentPage === "Project Detail" && <ProjectTasks />}
           </div>
         </div>
       </div>

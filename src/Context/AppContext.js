@@ -14,6 +14,7 @@ export default function AppContextProvider({ children }) {
 
   const elements = ["Dashboard", "Project","Create Team"];
 
+  
   const [currentPage, setCurrPage] = useState("");
   const [dashAllowPage , setDashAllowPage] = useState([]);
   const {user , accessToken}  = useSelector((state)=>state.auth);
@@ -23,6 +24,8 @@ export default function AppContextProvider({ children }) {
 
    const [allInvitation , setAllInvitation] = useState([]);
    const [allNotification , setAllNotification] = useState([]);
+
+   const [currentProjectOpen , setCurrProjectOpen] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -64,7 +67,6 @@ export default function AppContextProvider({ children }) {
 
   const fetchNotification = async()=>{
      const resp = await  makeAuthenticatedGETRequest(endpoints.GET_MY_NOTIFICATION_API ,accessToken);
-     console.log("caled");
      if(resp?.success){
       setAllNotification(resp?.notifications);
       setNotSeenNotification(resp?.unseenCount);
@@ -150,8 +152,9 @@ export default function AppContextProvider({ children }) {
       }
   },[openNotification])  // eslint-disable-next-line react-hooks/exhaustive-deps
 
+
   const value = {
-    changeHandler   ,setCurrPage , currentPage  ,fetchUserDetails ,logoutHandler ,user  ,dashAllowPage , fetchTeamDetails , myTeam , setMyTeam ,setOpenInviPop , openInviPop , allInvitation , setAllInvitation , allNotification , setAllNotification , openNotification , setOpenNotification , notSeenNotification , fetchNotification
+    changeHandler   ,setCurrPage , currentPage , currentProjectOpen , setCurrProjectOpen  ,fetchUserDetails ,logoutHandler ,user  ,dashAllowPage , fetchTeamDetails , myTeam , setMyTeam ,setOpenInviPop , openInviPop , allInvitation , setAllInvitation , allNotification , setAllNotification , openNotification , setOpenNotification , notSeenNotification , fetchNotification
   };
 
 

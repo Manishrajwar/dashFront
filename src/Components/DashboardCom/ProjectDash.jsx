@@ -24,7 +24,7 @@ const allStatus = ["All", "Ongoing", "Fininsh", "Onhold"];
 function ProjectDash() {
   const [currentStatus, setCurrentStatus] = useState("All");
   const { accessToken } = useSelector((state) => state.auth);
-  const { myTeam, changeHandler } = useContext(AppContext);
+  const { myTeam, changeHandler , setCurrPage  , setCurrProjectOpen} = useContext(AppContext);
 
   const [showCretePop, setShowCreatePop] = useState(false);
   const [inviteForm, setInviteForm] = useState(false);
@@ -161,6 +161,7 @@ function ProjectDash() {
     getProjects();
   }, []);  // eslint-disable-next-line react-hooks/exhaustive-deps
 
+
   return (
     <>
       <div className="dashwrap">
@@ -201,7 +202,13 @@ function ProjectDash() {
             <div key={index} className="singleProj">
               <nav>
                 {/* Left part */}
-                <div className="roboxleft">
+                <div onClick={()=>
+                  {
+                    setCurrPage("Project Detail");
+                    sessionStorage.setItem("currentPage" ,"Project Detail" );
+                    setCurrProjectOpen(project);
+                  
+                }} className="roboxleft">
                   <span>{project?.Name}</span>
                 </div>
                 {/* Right part */}
@@ -230,15 +237,6 @@ function ProjectDash() {
               </div>
 
               <p className="prodec">{project?.Description}</p>
-
-              {/* <div className="member">
-                <p className="prtotaltask">Members</p>
-                <ul>
-                  {project?.Members?.map((member, memberIndex) => (
-                    <li key={memberIndex}>{member.fullName}</li> // Render a specific property
-                  ))}
-                </ul>
-              </div> */}
 
               <p className="prtotaltask">{project?.totalTasks} Tasks</p>
 
