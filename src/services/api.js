@@ -27,6 +27,7 @@ export const endpoints = {
   INVITATION_RESPONSE_API: baseurl + "/auth/inviResponse", 
   GET_MY_NOTIFICATION_API: baseurl + "/auth/getNotification" , 
   DELETE_NOTIFICATION_API : baseurl + "/auth/deleteNotification" , 
-  MARK_ALL_READ_NOTIFY_API: baseurl + "/auth/markAllReadNotify"
+  MARK_ALL_READ_NOTIFY_API: baseurl + "/auth/markAllReadNotify" , 
+  CREATE_TASK_API: baseurl + "/auth/"
   
 };

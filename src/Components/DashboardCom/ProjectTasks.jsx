@@ -2,6 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import "./task.css";
 import cross from "../../Assets/cross.png";
 import { AppContext } from "../../Context/AppContext";
+import toast from "react-hot-toast";
+import { makeAuthenticatedPOSTRequest } from "../../services/serverHelper";
+import { endpoints } from "../../services/api";
 
 function ProjectTasks() {
   const { changeHandler, currentProjectOpen } = useContext(AppContext);
@@ -14,6 +17,19 @@ function ProjectTasks() {
     priority: "Low",
     dueDate: "",
   });
+
+
+   const createTaskHandler = async()=>{
+    const toastId = toast.loading("Loading...");
+    try{
+
+      const resp = await makeAuthenticatedPOSTRequest(endpoints)
+ 
+    } catch(error){
+       toast.error("Something went wrong , please try again");
+    }
+    toast.dismiss(toastId);
+   }
 
   //  go back to the project page protector
   useEffect(() => {
