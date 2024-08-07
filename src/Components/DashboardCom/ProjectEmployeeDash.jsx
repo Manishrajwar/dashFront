@@ -12,7 +12,7 @@ const allStatus = ["All", "Ongoing", "Fininsh", "Onhold"];
 function ProjectEmployeeDash() {
 
      const {accessToken} = useSelector((state)=>state.auth);
-     const {openInviPop} = useContext(AppContext);
+     const {openInviPop , setCurrPage , setCurrProjectOpen} = useContext(AppContext);
     const [currentStatus, setCurrentStatus] = useState("All");
        const [allProjects , setAllProjects] = useState([]);
 
@@ -25,7 +25,9 @@ function ProjectEmployeeDash() {
 
        useEffect(()=>{
         getEmployeeProject();
-       },[openInviPop])
+      
+// eslint-disable-next-line react-hooks/exhaustive-deps
+},[openInviPop])
        
   return (
     <div className="dashwrap">
@@ -52,8 +54,12 @@ function ProjectEmployeeDash() {
 
         {allProjects?.map((project, index) => (
             <div key={index} className="singleProj">
+
               <nav>
-                <div className="roboxleft">
+                <div onClick={()=>{
+                   setCurrPage("Employee Project Detail");
+                   setCurrProjectOpen(project);
+                }} className="roboxleft">
                   <span>{project?.Name}</span>
                 </div>
                
@@ -74,8 +80,6 @@ function ProjectEmployeeDash() {
               </div>
 
               <p className="prodec">{project?.Description}</p>
-
-        
 
               <p className="prtotaltask">{project?.totalTasks} Tasks</p>
 

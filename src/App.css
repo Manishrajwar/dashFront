@@ -1,3 +1,8 @@
+
+:root {
+    --richred-900: #A62B00;
+    --gray-5: #EBEBEB;
+  }
 .commonWrap{
      position: relative;
      width: 100%;

@@ -80,14 +80,14 @@ font-weight: 500;
 line-height: 24px;
 letter-spacing: 0.005em;
 text-align: left;
-color: #0B56E4;
+color: #69449C;
 }
 
 .loginCont form button{
     max-width: 418px;
     width: 100%;
     height: 46px;
-    background: #0B56E4;
+    background: #69449C;
 text-align: center;
 }
 .loginCont form button span{
@@ -144,7 +144,7 @@ cursor: pointer;
 }
 
 .currentBar{
-    background-color: #0B56E4;
+    background-color: #69449C;
     color: white;
     border: none;
 
@@ -168,7 +168,7 @@ cursor: pointer;
 }
 
 .crlin{
-    color: #0B56E4 !important;
+    color: #69449C !important;
     font-weight: 600 !important;
 
 }

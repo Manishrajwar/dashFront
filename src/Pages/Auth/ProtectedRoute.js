@@ -1,16 +1,22 @@
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-function ProtectedRoute() {
-    const navigate = useNavigate();
-  const {user} = useSelector((state)=>state.auth);
-   
-  if(user){
- navigate("/dashboard")
-  }
-  else {
-      navigate("/login");
-  }
+function ProtectedRoute({ dashboard = false, goHome = false }) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (dashboard) {
+      navigate("/dashboard");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (goHome) {
+      navigate("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 }
 
-export default ProtectedRoute
+export default ProtectedRoute;

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import "./common.css";
-import { NavLink } from "react-router-dom";
 import { AppContext } from "../../Context/AppContext";
 
 
@@ -11,7 +10,6 @@ function Sidebar() {
   return (
     <div className="sidebarWrap">
       <div className="sidebarCont">
-        <NavLink to={"/"}>Logo</NavLink>
 
         {dashAllowPage?.map((ele, index) => (
           <label  className={`cursor-pointer  ${currentPage === ele && "selected"}`} onClick={()=>{

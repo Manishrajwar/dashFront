@@ -33,3 +33,105 @@ gap: 20px;
     letter-spacing: 0.005em;
 color: #FFFFFF;    
 }
+
+.statusInput{
+    max-width: 250px;
+    width: 100%;
+    
+}
+
+.OvervieCont{
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+}
+
+.proComDetail{
+    box-shadow: 0px 8px 32px -2px #1B25330F;
+    border: 1px solid #E8E9EB;
+    background: #FFFFFF;
+padding: 10px;
+}
+
+.prsecSec label{
+     display: flex;
+     flex-direction: column;
+     gap: 5px;
+}
+.prsecSec label p{
+    font-family: Inter;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 32px;
+    text-align: left;
+    color: #101820;
+}
+.prsecSec label span{
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 32px;
+    text-align: left;
+    color: #101820;
+}
+
+.proDetails{
+
+display:flex;
+justify-content:space-between;
+align-items: center;
+}
+.proDetails .proDetaLeft{
+   display: grid;
+   grid-template-columns: repeat(2 ,1fr);
+   gap: 20px;
+}
+.proDetails .proDetaLeft label{
+ display: flex;
+ align-items: center;
+ gap: 5px;
+}
+.proDetails .proDetaLeft label p{
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 32px;
+    text-align: left;
+    color: #101820;
+}
+.proDetails .proDetaLeft label span{
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 32px;
+    text-align: left;
+    color: #101820;
+}
+
+.memberDetail h2{
+    font-family: Inter;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 32px;
+    text-align: left;
+    color: #101820;
+}
+
+.memberDetail , .allMemb{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.singMem{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.singMem span{
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 32px;
+    text-align: left;
+    color: #101820;
+}

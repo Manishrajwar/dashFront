@@ -12,8 +12,7 @@ import cross from "../Assets/cross.png";
 import toast from "react-hot-toast";
 import { makeAuthenticatedDELETERequest, makeAuthenticatedPOSTRequest, makeAuthenticatedPUTRequest } from "../services/serverHelper";
 import { endpoints } from "../services/api";
-import ProjectDetails from "../Components/DashboardCom/ProjectTasks";
-import ProjectTasks from "../Components/DashboardCom/ProjectTasks";
+import EmployeeProjectTasks from "../Components/DashboardCom/EmployeeProjectTasks";
 
 
 function Dashboard() {
@@ -87,14 +86,15 @@ function Dashboard() {
               ? currentPage === "Project" && <ProjectEmployeeDash />
               : currentPage === "Project" && <ProjectDash />}
             {currentPage === "Create Team" && <CreateTeam />}
-            {currentPage === "Project Detail" && <ProjectTasks />}
+            {/* {currentPage === "Project Detail" && <ProjectTasks />} */}
+            {currentPage === "Employee Project Detail" && <EmployeeProjectTasks />}
           </div>
         </div>
       </div>
 
       {openInviPop && (
-        <div className="porjepopupWrap">
-          <div className="createpopcont incheigh">
+        <div className="porjepopupWrap popup-overlay">
+          <div className="createpopcont incheigh popup-content">
             <nav>
               <p>Invitation Notification</p>
               <img
@@ -109,12 +109,12 @@ function Dashboard() {
             <hr />
 
             {allInvitation?.map((invi, index) => (
-              <div key={index} className="singlinv">
+              <div key={index} className="singlinv single-invitation">
                 <h3>{invi?.title}</h3>
 
                 <p>Send By : {invi?.sendBy?.email}</p>
                 <p>Project : {invi?.project?.Name}</p>
-                <div className="createbtns">
+                <div className="createbtns invitation-buttons">
                   <button onClick={() => inviResHandler("Accept", invi?._id)}>
                     Accept
                   </button>
@@ -171,6 +171,7 @@ function Dashboard() {
           </div>
         </div>
       )}
+      
     </>
   );
 }

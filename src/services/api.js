@@ -2,6 +2,7 @@
 
 
 const baseurl = "http://localhost:4000/api/v1"
+// const baseurl = "https://dashback-4.onrender.com/api/v1"
 
 
 // AUTH ENDPOINTS
@@ -28,6 +29,15 @@ export const endpoints = {
   GET_MY_NOTIFICATION_API: baseurl + "/auth/getNotification" , 
   DELETE_NOTIFICATION_API : baseurl + "/auth/deleteNotification" , 
   MARK_ALL_READ_NOTIFY_API: baseurl + "/auth/markAllReadNotify" , 
-  CREATE_TASK_API: baseurl + "/auth/"
+  CREATE_TASK_API: baseurl + "/auth/createTask",
+  GET_ALL_PROJECT_TASK: baseurl + "/auth/getAllProjectTask" , 
+  GET_PROJECT_MEMBER_TASK: baseurl + "/auth/getProjectMemberTask" , 
+  UPDATE_TASK_STATUS_API: baseurl + "/auth/updateTaskStatus" , 
+  UPDATE_TASK_API: baseurl + "/auth/updateTask" , 
+  DELETE_TASK_API: baseurl + "/auth/deleteTask" , 
+  CHANGE_USER_CLOCIN_API: baseurl + "/auth/clockIn" , 
+  UPDATE_TIMER_STATUS_API : baseurl + "/auth/clockInStatus" , 
+  TIMER_CLOCKOUT_API: baseurl + "/auth/clockOutHandler"
+
   
 };

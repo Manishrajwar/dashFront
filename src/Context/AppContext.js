@@ -27,6 +27,9 @@ export default function AppContextProvider({ children }) {
 
    const [currentProjectOpen , setCurrProjectOpen] = useState(null);
 
+   const [openOverview , setOpenOverview] = useState(false);
+
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -34,6 +37,7 @@ export default function AppContextProvider({ children }) {
      try{
  
         const resp = await makeAuthenticatedGETRequest(endpoints.GET_USER_DETAIL_API , accessToken );
+        console.log("respuser ",resp);
       
          if(resp?.status){
            localStorage.setItem("user" , JSON.stringify(resp?.data));
@@ -108,6 +112,7 @@ export default function AppContextProvider({ children }) {
       else{
         setAllInvitation([]);
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   },[accessToken])  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(()=>{
@@ -116,6 +121,7 @@ export default function AppContextProvider({ children }) {
        }else{
         setOpenInviPop(false);
        }
+       // eslint-disable-next-line react-hooks/exhaustive-deps
   },[allInvitation])  // eslint-disable-next-line react-hooks/exhaustive-deps
   
   useEffect(()=>{
@@ -144,17 +150,19 @@ export default function AppContextProvider({ children }) {
          sessionStorage.setItem("currentPage" , elements[0]);
        }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[user])  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(()=>{
      if(openNotification){
        fetchNotification();
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   },[openNotification])  // eslint-disable-next-line react-hooks/exhaustive-deps
 
 
   const value = {
-    changeHandler   ,setCurrPage , currentPage , currentProjectOpen , setCurrProjectOpen  ,fetchUserDetails ,logoutHandler ,user  ,dashAllowPage , fetchTeamDetails , myTeam , setMyTeam ,setOpenInviPop , openInviPop , allInvitation , setAllInvitation , allNotification , setAllNotification , openNotification , setOpenNotification , notSeenNotification , fetchNotification
+    changeHandler   ,setCurrPage , currentPage , currentProjectOpen , setCurrProjectOpen  ,fetchUserDetails ,logoutHandler ,user  ,dashAllowPage , fetchTeamDetails , myTeam , setMyTeam ,setOpenInviPop , openInviPop , allInvitation , setAllInvitation , allNotification , setAllNotification , openNotification , setOpenNotification , notSeenNotification , fetchNotification , openOverview , setOpenOverview
   };
 
 

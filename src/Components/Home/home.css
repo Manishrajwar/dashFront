@@ -1,0 +1,597 @@
+/* hero section  css  */
+.hoPaWrap{
+  width: 100%;
+  position: relative;
+ padding: 0px 20px;
+ background-color: white;
+}
+
+.hoPaContain{
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+display: flex;
+padding: 20px 0px 0px 0px;
+gap: 20px;
+align-items: center;
+justify-content: space-between;
+}
+
+ .hoPa_content{
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 24px;
+}
+ .hoPa_content .hoPaPara{
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;   
+ gap: 24px;
+ max-width: 560px;
+}
+ .hoPa_content .hoPaPara .para1{
+    font-family: Inter;
+font-size: 18px;
+font-weight: 700;
+line-height: 27px;
+text-align: left;
+color: #212121;
+}
+.hoPa_content .hoPaPara .para{
+   color: #212121;
+   font-family: Inter;
+font-size: 18px;
+font-weight: 400;
+line-height: 27px;
+text-align: left;
+
+    
+}
+
+
+.hoPa_content h2{
+     font-family: Inter;
+    font-size: 56px;
+    font-weight: 400;
+    line-height: 67.2px;
+    max-width: 560px;
+    text-align: left;
+    
+}
+
+.btnTextWrap{
+    display: flex;
+padding-top: 16px;
+align-items: center;
+gap: 16px;
+}
+
+.hoPa_content .btnTextWrap button{
+    display: flex;
+    overflow: hidden;
+    padding: 1em 2em;
+    width: 132px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background: #A62B00;
+    color: #FFF;
+    font-family: Inter;
+font-size: 12px;
+font-weight: 700;
+line-height: 16.8px;
+text-align: left;
+
+    
+}
+
+
+ .hoPaWrap .hoPa_img{
+    width: 560px;
+    display: flex;
+    justify-content: center;
+
+}
+ .hoPa_img img{
+    max-width: 578px;
+    max-height: 578px;
+   width: 100%;
+   /* border: 1px solid rgb(237, 229, 229); */
+
+
+}
+
+.noCreditText{
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: left;
+color: #212121;    
+    
+}
+
+
+
+
+/* set IT css */
+.setItWrap{
+    display: flex;
+padding: 64px 24px;
+align-items: center;
+justify-content: center;
+background: #333;
+}
+
+.setITContain{
+    display: flex;
+max-width: 1200px;
+width: 100%;
+flex-direction: column;
+align-items: center;
+gap: 48px;
+}
+
+.setITContain .head_para{
+display: flex;
+flex-direction: column;
+gap: 16px;
+align-items: center;
+}
+.setITContain .head_para h2{
+     font-family: Inter;
+font-size: 56px;
+font-weight: 400;
+line-height: 67.2px;
+text-align: center;
+color: #DFDA45;
+}
+.setITContain .setTwPa{
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+   align-items: center;
+   max-width: 691px;
+}
+.setITContain .setTwPa .setTP1{
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+    text-align: center;
+color: #FFFFFF;    
+}
+.setITContain .setTwPa .setTP2{
+    font-family: Inter;
+font-size: 18px;
+color: white;
+font-weight: 700;
+line-height: 27px;
+text-align: center;
+
+}
+
+
+.setITBOXES{
+    display: flex;
+gap: 20px;
+width: 100%;
+justify-content: space-between;
+}
+
+ .singleBox{
+    width: 264px;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+
+ .singleBox .imgBox{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+      width: 100%;
+     height: 180px;
+}
+
+ .singleBox .titParaBox{
+    display: flex;
+    padding: 24px;
+    flex-direction: column;
+    align-items: center;
+    background: #DFDA45;
+    width: 100%;
+    min-height: 215px;
+    
+}
+ .singleBox .titParaBox .title{
+     font-family: Inter;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 48px;
+    text-align: center;
+color: #000000;    
+}
+ .singleBox .titParaBox .paraf{
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+color: #000000;    
+}
+
+/* user reckon css */
+
+.userRecWrap{
+    display: flex;
+padding: 64px 0px;
+flex-direction: column;
+align-items: center;
+align-self: stretch;
+background-color: #F34A4A;
+}
+
+.reckonContain{
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    padding: 24px;
+    flex-direction: column;
+    gap: 13px;
+    align-items: flex-start;
+    background: #F34A4A;
+}
+
+
+.reckonContain .heading{
+     font-family: Inter;
+    font-size: 56px;
+    font-weight: 400;
+    line-height: 67.2px;
+    text-align: left;
+color: #DFDA45;    
+}
+
+
+.recItemBox{
+    display: flex;
+max-width: 1157px;
+width: 100%;
+min-height: 452px;
+height: auto;
+padding: 10px;
+flex-direction: column;
+align-items: center;
+gap: 10px;
+margin: 0 auto;
+}
+.recItemBox .itemCol{
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.margintop{
+    margin-top: 18px;
+}
+
+.recItemBox .singleItem{
+    display: flex;
+    padding: 15px 30px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+background: #333;
+}
+.recItemBox .singleItem span{
+    font-family: Inter;
+font-size: 16px;
+font-weight: 500;
+line-height: 22.4px;
+text-align: left;
+color: #FFFFFF;
+}
+
+/* trust wrap css */
+.trustWap{
+    display: flex;
+padding: 64px 24px;
+flex-direction: column;
+align-items: center;
+gap: 32px;
+background: #FFF;
+
+}
+.trustWap .heading{
+    color: #000;
+    text-align: center;
+     font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%; 
+    width: 560px;
+
+}
+
+.trustWap .logoContainer{
+    display: flex;
+justify-content: center;
+align-items: center;
+gap: 48px;
+align-self: stretch;
+width: 100%;
+flex-wrap: wrap;
+
+}
+.trustWap .logoContainer .img1{
+width: 154px;
+aspect-ratio: 9/2;
+object-fit: contain;
+}
+
+
+
+/* imp */
+@media (max-width:1300px) {
+    .hoPaWrap .hoPa_img{
+        max-width: 500px;
+    }
+    .hoPa_content{
+       padding-left: 35px;
+        }
+}
+
+/* imp */
+@media (max-width:1200px) {
+    .hoPaWrap .hoPa_img{
+        max-width: 450px;
+    }
+    .hoPa_content{
+        padding-left: 15px;
+         }
+  
+}
+
+@media (max-width:1140px) {
+    .recItemBox .singleItem span{
+      font-size: 14px;
+    }
+
+}
+
+/* imp */
+@media (max-width:1050px) {
+    .hoPa_content h2{
+       font-size: 44px;
+    }
+    .hoPaWrap .hoPa_img{
+        max-width: 426px;
+    }
+    .hoPa_content .hoPaPara .para1{
+       font-size: 16px;
+    }
+    .hoPa_content .hoPaPara .para{
+       font-size: 16px;
+        
+    } 
+    .hoPa_content{
+        padding-left: 0px;
+         }
+
+         .hoPaContain{
+            padding: 64px 10px 103px 10px;
+        }
+}
+
+@media (max-width:1040px) {
+    .recItemBox .singleItem span{
+        font-size: 13px;
+      }
+}
+
+
+
+
+/* imp */
+@media (max-width:1024px) {
+    .userRecWrap{
+        padding: 0px 0px;
+    }
+    .reckonContain{
+        padding: 50px 20px 0px 20px;
+    }
+     
+        .hoPa_content .para{   
+           max-width: 570px;
+           font-size: 16px;     
+        }
+        .setITBOXES{
+            display: grid;
+            grid-template-columns: repeat(2 ,1fr);
+         place-items: center;
+            }
+
+        
+
+}
+
+@media (max-width:980px) {
+    .reckonContain{
+        padding: 50px 20px;
+    }
+     
+}
+
+@media (max-width:950px) {
+    .recItemBox .itemCol{
+       display: grid;
+       grid-template-columns: repeat(2,1fr);
+       padding: 2px; 
+      
+       
+    }
+    
+    .recItemBox .singleItem{
+        height: 50px;
+        overflow: hidden;
+    }
+    .marginHandler{
+        margin-top: 20px;
+    }
+    .mhan{
+        /* margin: 100px 0px 0px 100px; */
+        transform: translateX(50%);
+    }
+
+    
+}
+
+/*imp  */
+@media (max-width:900px) {
+    .hoPa_content h2{
+        font-size: 34px;
+     }
+   
+     .hoPa_content .hoPaPara .para1{
+        font-size: 14px;
+     }
+     .hoPa_content .hoPaPara .para{
+        font-size: 14px;
+         
+     } 
+}
+
+/* imp */
+@media (max-width:730px) {
+    .hoPaContain{
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 30px;
+    }
+    
+ .hoPa_content{
+  max-width: 426px;
+    }
+
+
+}
+
+@media (max-width:700px) {
+   
+    .hoPa_content{
+      max-width: 427px;
+    }
+   
+    .setItWrap{
+        padding: 64px 20px;
+    
+    }
+    .setITBOXES{
+        display: flex;
+  flex-direction: column;
+  align-items: center;
+    }
+    .singleBox .titParaBox{
+
+        min-height: auto;
+        
+    }
+}
+
+/* imp */
+@media (max-width:624px) {
+    
+     .setITContain .setTwPa .setTP1{
+        font-size: 16px;
+     }
+     .setITContain .setTwPa .setTP2{
+        font-size: 16px;
+     }
+    
+}
+
+@media (max-width:555px) {
+    .recItemBox .itemCol{
+        display: flex;
+        flex-direction: column;
+      
+     }
+     .recItemBox{
+       padding: 2px;
+    }
+    .recItemBox .singleItem{
+width: 95%;
+    } 
+    .marginHandler{
+        margin-top: 0px;
+    }
+    .recItemBox{
+      gap: 0;
+    }
+
+    .margintop{
+        margin-top: 0px;
+    }
+    .mhan{
+        transform: translateX(0);
+    }
+  
+}
+
+@media (max-width:550px) {
+    .hoPa_img{
+        width: 95%;
+    }   
+}
+
+/* imp */
+@media (max-width:500px) {
+    .reckonContain .heading{
+        font-size: 24px;
+    }
+    .hoPaWrap .hoPa_img{
+      width: 100%;
+    
+    }
+     .hoPa_img img{
+    width: 100%;
+    
+    }
+   
+    
+}
+@media (max-width:450px) {
+    .recItemBox .singleItem span{
+       font-size: 14px;
+    }
+    
+}
+
+@media (max-width:400px) {
+    .trustWap .logoContainer{
+     display: flex;
+     flex-direction: column;
+    
+    }
+
+}
+
+
+
+/* imp */
+@media (max-width:370px) {
+    .hoPa_content h2{
+        font-size: 28px;
+     }
+
+}
+
+

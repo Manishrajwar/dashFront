@@ -8,6 +8,9 @@ import edit from "../../Assets/edit.png";
 import deleteuser from "../../Assets/bx-trash-alt.png";
 import share from "../../Assets/bx-share-alt.png";
 import useOnClickOutside from "../../Hooks/useOnClickOutside";
+import { FaLocationArrow } from "react-icons/fa";
+import ProjectTasks from "../DashboardCom/ProjectTasks"
+
 import toast from "react-hot-toast";
 import {
   makeAuthenticatedDATADELETERequest,
@@ -18,13 +21,14 @@ import {
 import { endpoints } from "../../services/api";
 import { useSelector } from "react-redux";
 import { AppContext } from "../../Context/AppContext";
+import ProjectOverview from "./ProjectOverview";
 
 const allStatus = ["All", "Ongoing", "Fininsh", "Onhold"];
 
 function ProjectDash() {
   const [currentStatus, setCurrentStatus] = useState("All");
   const { accessToken } = useSelector((state) => state.auth);
-  const { myTeam, changeHandler , setCurrPage  , setCurrProjectOpen} = useContext(AppContext);
+  const { myTeam, changeHandler , currentProjectOpen  , setCurrProjectOpen , openOverview , setOpenOverview} = useContext(AppContext);
 
   const [showCretePop, setShowCreatePop] = useState(false);
   const [inviteForm, setInviteForm] = useState(false);
@@ -38,6 +42,7 @@ function ProjectDash() {
   };
   const [openProNav, setOpenNav] = useState(false);
   const [allProjects, setAllProject] = useState([]);
+
   const proNavRef = useRef(null);
   useOnClickOutside(proNavRef, () => setOpenNav(null));
 
@@ -159,9 +164,9 @@ function ProjectDash() {
 
   useEffect(() => {
     getProjects();
-  }, []);  // eslint-disable-next-line react-hooks/exhaustive-deps
-
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
   return (
     <>
       <div className="dashwrap">
@@ -200,15 +205,12 @@ function ProjectDash() {
         <div className="allProjectccont">
           {allProjects?.map((project, index) => (
             <div key={index} className="singleProj">
+
               <nav>
                 {/* Left part */}
-                <div onClick={()=>
-                  {
-                    setCurrPage("Project Detail");
-                    sessionStorage.setItem("currentPage" ,"Project Detail" );
-                    setCurrProjectOpen(project);
-                  
-                }} className="roboxleft">
+                <div onClick={()=>{ 
+                  setCurrProjectOpen(project);
+                  }} className="roboxleft">
                   <span>{project?.Name}</span>
                 </div>
                 {/* Right part */}
@@ -236,20 +238,20 @@ function ProjectDash() {
                 </div>
               </div>
 
-              <p className="prodec">{project?.Description}</p>
-
-              <p className="prtotaltask">{project?.totalTasks} Tasks</p>
+              <p className="prodec">{project?.Description ? `${project.Description.substring(0, 20)}...` : ''}</p>
 
               {openProNav === index && (
                 <div className="opennav" ref={proNavRef}>
-                  <div
+
+                  <div 
                     onClick={() => setInviteForm(project?._id)}
                     className="cursor-pointer"
                   >
                     <img src={userplus} alt="userplus" />{" "}
                     <p> Invite Employee</p>
                   </div>
-                  <div
+
+                  <div className="cursor-pointer"
                     onClick={() => {
                       setIsProjectEdit(project?._id);
                       const { Name, dueDate, Description } = project;
@@ -266,12 +268,19 @@ function ProjectDash() {
                   >
                     <img src={edit} alt="" /> <p> Edit</p>
                   </div>
-                  <div>
+
+                  <div className="cursor-pointer">
                     <img src={share} alt="" /> <p> Share To Clients</p>
                   </div>
-                  <div onClick={() => deleteProject(project?._id)}>
+
+                  <div className="cursor-pointer" onClick={() => deleteProject(project?._id)}>
                     <img src={deleteuser} alt="" /> <p> Delete</p>
                   </div>
+
+                  <div onClick={()=>setOpenOverview(project)} className="cursor-pointer" >
+                  <FaLocationArrow /> <p> Overview</p>
+                  </div>
+
                 </div>
               )}
             </div>
@@ -282,8 +291,9 @@ function ProjectDash() {
       {/* this is cretae project popup  */}
 
       {showCretePop && (
-        <div className="porjepopupWrap">
-          <div className="createpopcont incheigh">
+        <div className="porjepopupWrap popup-overlay">
+          <div className="createpopcont incheigh  popup-content">
+
             <nav>
               <p>Create New Project</p>
               <img
@@ -371,7 +381,7 @@ function ProjectDash() {
                 />
               </label>
 
-              <div className="createbtns">
+              <div className="createbtns  invitation-buttons">
                 <button
                   onClick={(e) => {
                     e.preventDefault();
@@ -394,13 +404,14 @@ function ProjectDash() {
                 </button>
               </div>
             </form>
+
           </div>
         </div>
       )}
 
       {inviteForm && (
-        <div className="porjepopupWrap">
-          <div className="createpopcont incheigh">
+        <div className="porjepopupWrap popup-overlay">
+          <div className="createpopcont incheigh   popup-content">
 
             <nav>
               <p>Invite Employee</p>
@@ -445,13 +456,38 @@ function ProjectDash() {
                 />
               </label>
 
-            <div className="createbtns">
+            <div className="createbtns invitation-buttons">
              <button  type="submit">Send</button>
             </div>
             </form>
           </div>
         </div>
       )}
+
+      {openOverview && (
+      <div className="ShowDetailWrap popup-overlay">
+      <div className="createpopcont incheighWidth  popup-content">
+
+      <ProjectOverview  />
+       
+      </div>
+    </div>
+      )}
+
+
+      {currentProjectOpen && (
+        <div className="ShowDetailWrap popup-overlay">
+          <div className="createpopcont incheighWidth  popup-content">
+ 
+          <ProjectTasks  />
+           
+          </div>
+        </div>
+      )}
+
+    
+
+
     </>
   );
 }

@@ -1,28 +1,41 @@
 import "./dashcom.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import clockInimg from "../../Assets/clockIn.png";
+import { makeAuthenticatedPOSTRequest, makeAuthenticatedPUTRequest } from "../../services/serverHelper";
+import { useSelector } from "react-redux";
+import { endpoints } from "../../services/api";
+import { AppContext } from "../../Context/AppContext";
 var tc3;
 var tc4;
 
 const Timer = () => {
   const [loading, setLoading] = useState(false);
-  const [clockoutLoading, setClockOutLoading] = useState(false);
+  const {accessToken , user} = useSelector((state)=>state.auth);
+  const {fetchUserDetails} = useContext(AppContext); 
 
-  const [isBreakDone, setIsBreakDone] = useState(false);
+  // const [clockoutLoading, setClockOutLoading] = useState(false);
 
   var [clock, setClock] = useState(0);
   var [breakClock, setBreakClock] = useState(0);
   const [mount, setMount] = useState(false);
 
+
+  
   const [clockStatus, setClockStatus] = useState("Clock-in");
+  
+  const setUserClockInHandler = async(clockIn)=>{
+     await makeAuthenticatedPOSTRequest(endpoints.CHANGE_USER_CLOCIN_API , {clockIn:clockIn, Note:""} , accessToken);
+     fetchUserDetails();
+  }
 
-  useEffect(() => {
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+   const updateUserClockHandler = async(status)=>{
+    await makeAuthenticatedPUTRequest(endpoints.UPDATE_TIMER_STATUS_API , {status , timerId:user?.timerDetail?._id} , accessToken);
+   }
 
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, []);  // eslint-disable-next-line react-hooks/exhaustive-deps
+   const clockOutHandler = async()=>{
+   await makeAuthenticatedPUTRequest(endpoints.TIMER_CLOCKOUT_API ,{timerId:user?.timerDetail?._id} ,  accessToken);
+     fetchUserDetails();
+   }
 
   const handleVisibilityChange = () => {
     if (!document.hidden) {
@@ -30,13 +43,21 @@ const Timer = () => {
     }
   };
 
-  useEffect(() => {
-    initializeTimer();
-  }, []);  // eslint-disable-next-line react-hooks/exhaustive-deps
-
-  const initializeTimer = () => {
-    let t = localStorage.getItem("clock-in");
-    let t1 = localStorage.getItem("clock-status");
+  const initializeTimer = (clockIn , status) => {
+    console.log("break",breakClock);
+    let t , t1;
+    if(clockIn){
+       t = clockIn;
+    }
+    else {
+       t = localStorage.getItem("clock-in");
+    }
+    if(status){
+       t1 = status;
+    }
+    else {
+     t1 =  localStorage.getItem("clock-status");
+    }
     let t2 = localStorage.getItem("break-seconds");
     clearInterval(tc3);
     clearInterval(tc4);
@@ -93,9 +114,15 @@ const Timer = () => {
       let currentDate = new Date().toLocaleDateString("en-GB");
       localStorage.setItem("clock-in-date", currentDate);
 
+      // ! API CALL 
+       await setUserClockInHandler(new Date().getTime());
+
       tc4 = setInterval(() => {
         setClock(++clock);
       }, 1000);
+
+
+
     }
     // this is else of getting the status from locastorage
     else {
@@ -114,11 +141,14 @@ const Timer = () => {
         localStorage.setItem("clock-status", "resume");
         setClockStatus("Resume");
         let t3 = localStorage.getItem("break-seconds");
+        // ! API CALL 
+        updateUserClockHandler("resume");
 
         tc3 = setInterval(() => {
           setBreakClock(++t3);
         }, 1000);
-      } else if (t === "resume") {
+      }
+       else if (t === "resume") {
         localStorage.setItem(
           "breakOutTime",
           new Date().toLocaleTimeString("en-US", {
@@ -145,17 +175,22 @@ const Timer = () => {
           }
         }
         localStorage.setItem("clock-status", "Clock-out");
+        updateUserClockHandler("Clock-out");
         setClockStatus("Clock-out");
         localStorage.setItem("isBreakDone", true);
 
+    
+
         clearInterval(tc3);
-      } else if (t === "out") {
+      }
+       else if (t === "out") {
         // localStorage.setItem("clock-in", new Date().getTime());
         localStorage.setItem("clock-status", "break");
         localStorage.removeItem("clock-out-time");
         localStorage.removeItem("break-seconds");
         localStorage.removeItem("break-time");
-
+     
+        clockOutHandler();
         let t8 = 0;
         tc4 = setInterval(() => {
           setClock(++t8);
@@ -166,25 +201,41 @@ const Timer = () => {
     setLoading(false);
   };
 
-  const parseTime = (timeStr) => {
-    const [time, modifier] = timeStr.split(" ");
-    let [hours, minutes, seconds] = time.split(":");
+  // const parseTime = (timeStr) => {
+  //   const [time, modifier] = timeStr.split(" ");
+  //   let [hours, minutes, seconds] = time.split(":");
 
-    if (hours === "12") {
-      hours = "00";
-    }
+  //   if (hours === "12") {
+  //     hours = "00";
+  //   }
 
-    if (modifier === "PM") {
-      hours = parseInt(hours, 10) + 12;
-    }
+  //   if (modifier === "PM") {
+  //     hours = parseInt(hours, 10) + 12;
+  //   }
 
-    return new Date(
-      `${new Date().toDateString()} ${hours}:${minutes}:${seconds}`
-    );
-  };
+  //   return new Date(
+  //     `${new Date().toDateString()} ${hours}:${minutes}:${seconds}`
+  //   );
+  // };
+
+  const clockoutdetails = ()=>{
+    
+    localStorage.removeItem("clock-in");
+    localStorage.removeItem("clock-status");
+    localStorage.removeItem("clock-out-time");
+    localStorage.removeItem("clockOutTime");
+    localStorage.removeItem("clockInTime");
+    localStorage.removeItem("isBreakDone");
+    localStorage.removeItem("breakInTime");
+    localStorage.removeItem("breakOutTime");
+    localStorage.removeItem("clock-in-date");
+    localStorage.removeItem("break-time");
+    localStorage.removeItem("break-seconds");
+    localStorage.removeItem("date1");
+  }
 
   const clockOut = async () => {
-    setClockOutLoading(true);
+    // setClockOutLoading(true);
 
     // todo: put this cclock in status at corect position
     setClockStatus("Clock-in");
@@ -206,83 +257,80 @@ const Timer = () => {
     setMount(!mount);
     setClock(0);
 
-    const breakIn = localStorage.getItem("breakInTime");
-    const breakOut = localStorage.getItem("breakOutTime");
+    clockOutHandler();
 
-    // Convert breakIn and breakOut to Date objects
-    // Convert breakIn and breakOut to Date objects
-    let date1, date2;
-    if (breakIn !== null) {
-      date1 = parseTime(breakIn);
-    }
-    if (breakOut !== null) {
-      date2 = parseTime(breakOut);
-    }
+    // const breakIn = localStorage.getItem("breakInTime");
+    // const breakOut = localStorage.getItem("breakOutTime");
 
-    let differenceMs, hours, minutes, seconds, differenceText;
+   
+    // let date1, date2;
+    // if (breakIn !== null) {
+    //   date1 = parseTime(breakIn);
+    // }
+    // if (breakOut !== null) {
+    //   date2 = parseTime(breakOut);
+    // }
 
-    if (breakIn !== null && breakOut !== null) {
-      differenceMs = date2.getTime() - date1.getTime();
+    // let differenceMs, hours, minutes, seconds;
+    // let differenceText;
+
+    // if (breakIn !== null && breakOut !== null) {
+    //   differenceMs = date2.getTime() - date1.getTime();
 
       // Convert the difference to a readable format
-      hours = Math.floor(differenceMs / (1000 * 60 * 60));
-      minutes = Math.floor((differenceMs % (1000 * 60 * 60)) / (1000 * 60));
-      seconds = Math.floor((differenceMs % (1000 * 60)) / 1000);
+      // hours = Math.floor(differenceMs / (1000 * 60 * 60));
+      // minutes = Math.floor((differenceMs % (1000 * 60 * 60)) / (1000 * 60));
+      // seconds = Math.floor((differenceMs % (1000 * 60)) / 1000);
 
-      differenceText = `${hours}:${minutes}:${seconds}`;
-    }
+      // differenceText = `${hours}:${minutes}:${seconds}`;
+    // }
 
-    // let ans = await postActivity({
-    //   clockIn: localStorage.getItem("clock-in"),
-    //   clockOut: localStorage.getItem("clock-out-time"),
-    //   late: breakClock,
-    //   date1: localStorage.getItem("date1"),
-    //   overtime: clock - 32400 > 0 ? clock - 32400 : 0,
-    //   total: clock,
-    //   message: "",
-    // });
 
-    const userDataString = localStorage.getItem("hrms_user");
+    // const userDataString = localStorage.getItem("hrms_user");
 
-    const userData = JSON.parse(userDataString);
+    // const userData = JSON.parse(userDataString);
+    //  JSON.parse(userDataString);
 
-    const clockInDate = localStorage.getItem("clock-in-date");
+    // const clockInDate = localStorage.getItem("clock-in-date");
+    //  localStorage.getItem("clock-in-date");
+ 
+      clockoutdetails();
 
-    // const attendence = await postAttendence({
-    //   clockInDetail: localStorage.getItem("clockInTime"),
-    //   breakTime: differenceText,
-    //   clockOutDetail: localStorage.getItem("clockOutTime"),
-    //   id: userData?._id,
-    //   clockInDate: clockInDate,
-    // });
-
-    localStorage.removeItem("clock-in");
-    localStorage.removeItem("clock-status");
-    localStorage.removeItem("clock-out-time");
-    localStorage.removeItem("clockOutTime");
-    localStorage.removeItem("clockInTime");
-    localStorage.removeItem("breakInTime");
-    localStorage.removeItem("breakOutTime");
-    localStorage.removeItem("clock-in-date");
-    localStorage.removeItem("break-time");
-    localStorage.removeItem("break-seconds");
-    localStorage.removeItem("date1");
-
-    setClockOutLoading(false);
+    // setClockOutLoading(false);
   };
 
+
+
   useEffect(() => {
-    const isBreak = localStorage.getItem("isBreakDone");
-    const statusClock = localStorage.getItem("clock-status");
-    if (isBreak) {
-      setIsBreakDone(isBreak);
+    if(user?.isClockIn){
+       const {clockIn , status} = user?.timerDetail;
+     localStorage.setItem("clock-in" , clockIn);
+      localStorage.setItem("clock-status" , status);
+      setClockStatus(status);
+      initializeTimer(clockIn , status);
     }
-    if (statusClock) {
-      setClockStatus(statusClock);
-    } else {
-      setClockStatus("Clock-in");
+    else {
+      clockoutdetails();
+      initializeTimer(false , false);
     }
-  }, [clockStatus]);  // eslint-disable-next-line react-hooks/exhaustive-deps
+     
+// eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+  
+  
+
+  useEffect(() => {
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+
+// eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);  
+
+
+
 
   return (
     <div className="timerWrap">

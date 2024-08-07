@@ -12,6 +12,7 @@ import "swiper/css/pagination";
 import "./dashcom.css";
 import Timer from "./Timer";
 import { useSelector } from "react-redux";
+import Calender from "../Common/Calender";
 
 
 
@@ -143,6 +144,11 @@ function Dash() {
 
 <Timer />
 
+    </div>
+
+    {/* calenderrs  */}
+    <div className="timenewCont">
+        <Calender />
     </div>
 
     </div>
