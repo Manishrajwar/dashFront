@@ -57,7 +57,6 @@ const Login = () => {
           else {
             // for employe code login 
             resp = await makeUnauthenticatedPOSTRequest(endpoints.EMPLOYEE_CODE_LOGIN_API , {employeeCode:formdata.email , password:formdata.password});
-            console.log('ans',resp);
 
             if(resp.success){
               toast.success("Successfuly login");

@@ -168,25 +168,24 @@ background-color:#69449C;
 }
 .loginBtns button span {
   font-family: Inter;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: white;
 }
 
 /* for calender  */
 .calendarwrap {
-  max-width: 700px;
+  max-width: 60%;
   width: 100%;
-  max-height: 600px;
   height: 100%;
-  border: 1px solid #ccc; /* Optional: Add a border for better visibility */
-  overflow: hidden; /* Ensures the content doesn't overflow the container */
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  border: 1px solid #ccc; 
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .calendarwrap {
   width: 100% !important;
   height: 100% !important;
-  border: 1px solid #ccc !important; /* Optional: Add a border for better visibility */
+  border: 1px solid #ccc !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
 }
@@ -221,4 +220,11 @@ background-color:#69449C;
 
 .react-calendar__tile:only-child {
   border-bottom: none !important; /* Remove bottom border if there's only one tile */
+}
+
+button, [type='button'], [type='reset'], [type='submit']{
+  /* background-color:#bc9de8 !important; */
+}
+.react-calendar__tile--active {
+background-color: #69449C !important;
 }

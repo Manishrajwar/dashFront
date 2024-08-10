@@ -86,7 +86,7 @@ function Dashboard() {
               ? currentPage === "Project" && <ProjectEmployeeDash />
               : currentPage === "Project" && <ProjectDash />}
             {currentPage === "Create Team" && <CreateTeam />}
-            {/* {currentPage === "Project Detail" && <ProjectTasks />} */}
+
             {currentPage === "Employee Project Detail" && <EmployeeProjectTasks />}
           </div>
         </div>

@@ -1,16 +1,25 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import "./common.css"
+import { AppContext } from '../../Context/AppContext';
 
-const events = [
-  { date: new Date(2024, 7, 10), title: 'Meeting with Bob' },
-  { date: new Date(2024, 7, 15), title: 'Project deadline' },
-  { date: new Date(2024, 7, 20), title: 'Team lunch' },
-];
+
+function formatEvents(data) {
+  return data.map(item => {
+    return {
+      date: new Date(item.year, item.month - 1, item.date),
+      title: item.title , 
+      meetLink: item?.meetLink
+    };
+  });
+}
+
 
 function Calender() {
-  const [value, onChange] = useState(new Date());
+  const {fetchClockInDetails , calendervalue, onChange , calenderEvents  , setSelectedEvent} = useContext(AppContext);
+
+  const [events , setEvent] = useState([]);
 
   const getTileContent = ({ date, view }) => {
 
@@ -20,16 +29,44 @@ function Calender() {
         event.date.getMonth() === date.getMonth() &&
         event.date.getDate() === date.getDate()
     );
-    // Display event title if there's an event on this date
     return view === 'month' && event ? <p>{event.title}</p> : null;
   };
+
+  const handleClickDay = (date) => {
+    const event = events.find(
+      (event) =>
+        event.date.getFullYear() === date.getFullYear() &&
+        event.date.getMonth() === date.getMonth() &&
+        event.date.getDate() === date.getDate()
+    );
+    setSelectedEvent(event || null);
+  };
+
+  
+  useEffect(()=>{
+    if(calendervalue){
+      fetchClockInDetails(calendervalue);
+     }
+
+  },[calendervalue]);
+
+  useEffect(()=>{
+
+    if(calenderEvents?.length > 0){
+       const ans =  formatEvents(calenderEvents);
+       setEvent(ans);
+    }
+
+  },[calenderEvents])
+
 
   return (
     <div className="calendarwrap">
       <Calendar
         onChange={onChange}
-        value={value}
+        value={calendervalue}
         tileContent={getTileContent}
+        onClickDay={handleClickDay}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { makeAuthenticatedGETRequest } from "../services/serverHelper";
+import { makeAuthenticatedGETRequest, makeAuthenticatedPOSTRequest } from "../services/serverHelper";
 import { endpoints } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { setAccessToken, setUser } from "../reducer/slices/authSlice";
@@ -14,7 +14,9 @@ export default function AppContextProvider({ children }) {
 
   const elements = ["Dashboard", "Project","Create Team"];
 
-  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [currentPage, setCurrPage] = useState("");
   const [dashAllowPage , setDashAllowPage] = useState([]);
   const {user , accessToken}  = useSelector((state)=>state.auth);
@@ -28,16 +30,25 @@ export default function AppContextProvider({ children }) {
    const [currentProjectOpen , setCurrProjectOpen] = useState(null);
 
    const [openOverview , setOpenOverview] = useState(false);
+   const [currentTimer , setCurrentTimer] = useState({});
 
+   const [selectedEvent , setSelectedEvent] = useState({});
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+   const [calendervalue, onChange] = useState(new Date());
+
+   const [myTeam, setMyTeam] = useState({});
+
+   const [calenderEvents , setCalenderEvents] = useState();
+
+  const fetchCalenderEvents = async()=>{
+     const resp = await makeAuthenticatedGETRequest(endpoints.GET_MY_EVENTS_API , accessToken);
+     setCalenderEvents(resp?.myevents);
+  }
 
   const fetchUserDetails = async()=>{
      try{
  
         const resp = await makeAuthenticatedGETRequest(endpoints.GET_USER_DETAIL_API , accessToken );
-        console.log("respuser ",resp);
       
          if(resp?.status){
            localStorage.setItem("user" , JSON.stringify(resp?.data));
@@ -46,7 +57,6 @@ export default function AppContextProvider({ children }) {
          }
 
      } catch(error){
-       console.log("fetchuser ",error);
         
      }
   }
@@ -77,9 +87,6 @@ export default function AppContextProvider({ children }) {
      }
   }
 
-  const [myTeam, setMyTeam] = useState({});
-
-
   const fetchTeamDetails = async () => {
     const resp = await makeAuthenticatedGETRequest(
       endpoints.GET_MY_TEAMDETAILS_API,
@@ -99,11 +106,31 @@ export default function AppContextProvider({ children }) {
     }
   }
 
+  const formatDateToDayMonthYear = (dateString) => {
+    const date = new Date(dateString);
+  
+    // Extract the day, month, and year in local time
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Months are zero-based, so add 1
+    const year = date.getFullYear();
+  
+    // Format them as a string "day-month-year"
+    const formattedDate = `${day}-${month}-${year}`;
+    return formattedDate;
+  };
+  
+  const fetchClockInDetails = async (value) => {
+    const respdate = formatDateToDayMonthYear(value);
+    const resp = await makeAuthenticatedPOSTRequest(endpoints.FETCH_CLOCKIN_DETAILS_API,{ date: respdate },accessToken);
+     setCurrentTimer(resp?.data[0]);
+  };
+
   useEffect(()=>{
      if(accessToken){
        fetchUserDetails();
        fetchTeamDetails();
        fetchNotification();
+       fetchCalenderEvents();
        setTimeout(()=>{
          getInvitation();
 
@@ -161,8 +188,10 @@ export default function AppContextProvider({ children }) {
   },[openNotification])  // eslint-disable-next-line react-hooks/exhaustive-deps
 
 
+
+
   const value = {
-    changeHandler   ,setCurrPage , currentPage , currentProjectOpen , setCurrProjectOpen  ,fetchUserDetails ,logoutHandler ,user  ,dashAllowPage , fetchTeamDetails , myTeam , setMyTeam ,setOpenInviPop , openInviPop , allInvitation , setAllInvitation , allNotification , setAllNotification , openNotification , setOpenNotification , notSeenNotification , fetchNotification , openOverview , setOpenOverview
+    changeHandler   ,setCurrPage , currentPage , currentProjectOpen , setCurrProjectOpen  ,fetchUserDetails ,logoutHandler ,user  ,dashAllowPage , fetchTeamDetails , myTeam , setMyTeam ,setOpenInviPop , openInviPop , allInvitation , setAllInvitation , allNotification , setAllNotification , openNotification , setOpenNotification , notSeenNotification , fetchNotification , openOverview , setOpenOverview , fetchClockInDetails , currentTimer , setCurrentTimer  ,calendervalue, onChange , calenderEvents , setCalenderEvents , fetchCalenderEvents , selectedEvent , setSelectedEvent
   };
 
 

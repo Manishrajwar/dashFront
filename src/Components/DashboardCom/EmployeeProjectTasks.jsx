@@ -19,7 +19,6 @@ function EmployeeProjectTasks() {
       endpoints.GET_PROJECT_MEMBER_TASK + `/${currentProjectOpen?._id}`,
       accessToken
     );
-    console.log("rsp", resp);
     if (resp?.success) {
       setAllTask(resp?.allTask);
     }

@@ -44,7 +44,6 @@ const Timer = () => {
   };
 
   const initializeTimer = (clockIn , status) => {
-    console.log("break",breakClock);
     let t , t1;
     if(clockIn){
        t = clockIn;

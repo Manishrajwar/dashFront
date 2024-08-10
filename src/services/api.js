@@ -1,8 +1,8 @@
 // const BASE_URL = process.env.REACT_APP_BASE_URL
 
 
-// const baseurl = "http://localhost:4000/api/v1"
-const baseurl = "https://dashback-4.onrender.com/api/v1"
+const baseurl = "http://localhost:4000/api/v1"
+// const baseurl = "https://dashback-4.onrender.com/api/v1"
 
 
 // AUTH ENDPOINTS
@@ -37,7 +37,10 @@ export const endpoints = {
   DELETE_TASK_API: baseurl + "/auth/deleteTask" , 
   CHANGE_USER_CLOCIN_API: baseurl + "/auth/clockIn" , 
   UPDATE_TIMER_STATUS_API : baseurl + "/auth/clockInStatus" , 
-  TIMER_CLOCKOUT_API: baseurl + "/auth/clockOutHandler"
+  TIMER_CLOCKOUT_API: baseurl + "/auth/clockOutHandler" , 
+  FETCH_CLOCKIN_DETAILS_API : baseurl + "/auth/clockInDetails" , 
+  CREATE_MEETLINK_API: baseurl + "/auth/createEvent" , 
+  GET_MY_EVENTS_API : baseurl + "/auth/myEvents"
 
   
 };
