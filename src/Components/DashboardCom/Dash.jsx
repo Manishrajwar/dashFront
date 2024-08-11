@@ -1,4 +1,3 @@
-import refresh from "../../Assets/bx-refresh.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination, Autoplay } from "swiper/modules";
 import Frame96 from "../../Assets/Frame 9688.png";
@@ -63,21 +62,16 @@ function Dash() {
   return (
     <>
       <div className="dashwrap">
+
         <nav>
           {/* left side */}
           <div className="navleft">
-            <h2>{user?.name}</h2>
             <p>
               {user?.email === "trailemail@gmail.com"
                 ? "This is for trail You Will Not able to Edit the database"
                 : `Welcome ${user?.email}`}
             </p>
           </div>
-
-          {/* right side */}
-          <button>
-            <span>Refresh</span> <img src={refresh} alt="" />
-          </button>
         </nav>
 
         <Swiper
@@ -107,14 +101,14 @@ function Dash() {
             },
             580: {
               slidesPerView: 2,
-              spaceBetween: 20,
+              spaceBetween: 10,
               slidesOffsetBefore: 0,
               slidesOffsetAfter: 0,
               centeredSlides: false,
             },
             300: {
               slidesPerView: 1,
-              spaceBetween: 20,
+              spaceBetween: 10,
               slidesOffsetBefore: 0,
               slidesOffsetAfter: 0,
               centeredSlides: false,

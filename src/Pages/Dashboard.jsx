@@ -82,13 +82,15 @@ function Dashboard() {
 
           <div className="Maindashwrap">
             {currentPage === "Dashboard" && <Dash />}
-            {user?.accountType === "Employee"
-              ? currentPage === "Project" && <ProjectEmployeeDash />
-              : currentPage === "Project" && <ProjectDash />}
+            {
+            user?.accountType === "Employee" ? currentPage === "Project" && <ProjectEmployeeDash />  : currentPage === "Project" && <ProjectDash />}
+        
             {currentPage === "Create Team" && <CreateTeam />}
 
             {currentPage === "Employee Project Detail" && <EmployeeProjectTasks />}
+            
           </div>
+          
         </div>
       </div>
 

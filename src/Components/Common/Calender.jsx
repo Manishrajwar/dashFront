@@ -47,7 +47,7 @@ function Calender() {
     if(calendervalue){
       fetchClockInDetails(calendervalue);
      }
-
+ // eslint-disable-next-line react-hooks/exhaustive-deps
   },[calendervalue]);
 
   useEffect(()=>{
@@ -56,7 +56,7 @@ function Calender() {
        const ans =  formatEvents(calenderEvents);
        setEvent(ans);
     }
-
+ // eslint-disable-next-line react-hooks/exhaustive-deps
   },[calenderEvents])
 
 

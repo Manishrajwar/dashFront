@@ -1,7 +1,12 @@
 
 .swiper {
+    /* width: calc(100%-40px); */
     width: 100%;
     height: 100%;
+  }
+
+  .mySwiper{
+    max-width: 90vw;
   }
   
   .swiper-slide {
@@ -323,7 +328,7 @@ color: #1B2533;
   .prostatusfill{
     display: flex;
     align-items: center;
-    
+    overflow-x: scroll;
   }
     
   .prostatusfill span{
@@ -458,7 +463,7 @@ color: #1B2533;
 
 .porjepopupWrap{
   position: absolute;
-  min-width: 100vh;
+  width: 100vh;
   height: 100%;
   top: 0;
   left: 0;
@@ -473,7 +478,7 @@ color: #1B2533;
 
 .ShowDetailWrap{
   position: absolute;
-  min-width: 100vh;
+  width: 100vh;
   height: 100%;
   top: 0;
   left: 0;
@@ -500,16 +505,17 @@ border-radius: 18px ;
 }
 .incheigh{
   /* min-height: 492px  !important; */
-  max-height: none ;
+  /* max-height: none ; */
   height: fit-content !important;
   overflow-y: scroll !important;
 }
 
 .incheighWidth{
-  max-height: none;
+  max-height: 100vh;
   height: fit-content  !important;
   max-width: 95vw !important;
   margin: 10px;
+  overflow-y: scroll !important;
 }
 .increheight{
   max-height: 570px !important;
@@ -676,6 +682,7 @@ color: #666D76;
   flex-direction: column;
   gap: 24px;
 }
+
 
 .dashwrap2 nav{
   display: flex;
@@ -867,8 +874,10 @@ flex-direction: column;
       gap: 40px;
     }
     .latestAnnouceCont{
-      max-width: 100%;
+ 
+      max-width: calc(100vw - 50px);
       width: 100%;
+    
     }
     .timerWrap{
       max-width:700px;
@@ -1025,4 +1034,35 @@ outline: none;
     outline: none;
     color: #A62B00;
     cursor: pointer;
+  }
+
+  @media (max-width:900px) {
+    .timenewCont2{
+      display: flex;
+      flex-direction: column;
+    
+    }
+
+    .showCalenderDetails{
+      max-width: 100%;
+      width: 100%;
+  
+    }
+  
+  }
+.prodashoptions{
+  display: none;
+}
+  @media (max-width:650px) {
+ .prodashbtn{
+  display: none;
+ }
+ .prodashoptions{
+  display: flex;
+  font-size: 24px;
+ }
+ .createpopcont{
+margin: 0px 10px;
+
+}
   }

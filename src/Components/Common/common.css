@@ -6,6 +6,8 @@
   width: 224px;
   background: #ffffff;
   border-right: 1px solid #1c1c1c1a;
+  overflow: hidden; /* Prevents content overflow during animation */
+  transition: width 0.3s ease, padding 0.3s ease; /* Adjust the duration and easing as needed */
 }
 
 .sidebarCont {
@@ -111,11 +113,36 @@
   }
 }
 
+.sidebarCont2{
+  display: none;
+}
+
+
+.sidebarWrap.collapsed {
+  width: 40px;
+  padding: 0;
+}
+
 @media (max-width: 1150px) {
   .sidebarWrap {
+    width: 40px !important; 
+    padding: 0;
+  }
+  
+  .sidebarCont {
     display: none;
   }
+
+  .sidebarCont2 {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+
+    margin-top: 40px;
+  }
 }
+
 
 .bellWRAP {
   position: relative;
@@ -227,4 +254,11 @@ button, [type='button'], [type='reset'], [type='submit']{
 }
 .react-calendar__tile--active {
 background-color: #69449C !important;
+}
+@media (max-width:900px) {
+  /* for calender  */
+.calendarwrap {
+  max-width: 100%;
+ 
+}
 }

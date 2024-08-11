@@ -10,6 +10,8 @@ import share from "../../Assets/bx-share-alt.png";
 import useOnClickOutside from "../../Hooks/useOnClickOutside";
 import { FaLocationArrow } from "react-icons/fa";
 import ProjectTasks from "../DashboardCom/ProjectTasks"
+import { SlOptionsVertical } from "react-icons/sl";
+
 
 import toast from "react-hot-toast";
 import {
@@ -58,7 +60,6 @@ function ProjectDash() {
   const [inviteEmail, setInviteEmail] = useState({
     email:"" , title:""
   });
-
 
   const getProjects = async () => {
     const resp = await makeAuthenticatedGETRequest(
@@ -170,7 +171,9 @@ function ProjectDash() {
   return (
     <>
       <div className="dashwrap">
-        <nav>
+
+        <nav className="prodashnav">
+
           {/* left side */}
           <div className="navleft">
             <h2>Projects</h2>
@@ -187,7 +190,12 @@ function ProjectDash() {
             <button className="expobtn">
               <span>Export Project</span>
             </button>
+
           </div>
+
+          <SlOptionsVertical  className="prodashoptions"/>
+
+
         </nav>
 
         <div className="prostatusfill">
@@ -286,6 +294,7 @@ function ProjectDash() {
             </div>
           ))}
         </div>
+
       </div>
 
       {/* this is cretae project popup  */}
@@ -484,9 +493,6 @@ function ProjectDash() {
           </div>
         </div>
       )}
-
-    
-
 
     </>
   );

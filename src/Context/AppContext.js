@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { setAccessToken, setUser } from "../reducer/slices/authSlice";
 
 
-
 export const AppContext = createContext();
 
 

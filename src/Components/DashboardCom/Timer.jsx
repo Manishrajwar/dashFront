@@ -16,7 +16,7 @@ const Timer = () => {
   // const [clockoutLoading, setClockOutLoading] = useState(false);
 
   var [clock, setClock] = useState(0);
-  var [breakClock, setBreakClock] = useState(0);
+  // var [breakClock, setBreakClock] = useState(0);
   const [mount, setMount] = useState(false);
 
 
@@ -63,7 +63,7 @@ const Timer = () => {
 
     if (t1) {
       if (t2) {
-        setBreakClock(t2);
+        // setBreakClock(t2);
       }
 
       if (t1 !== "out") {
@@ -76,7 +76,7 @@ const Timer = () => {
 
         if (t1 === "resume") {
           tc3 = setInterval(() => {
-            setBreakClock(++t2);
+            // setBreakClock(++t2);
           }, 1000);
         }
       } else {
@@ -139,12 +139,12 @@ const Timer = () => {
         localStorage.setItem("break-time", new Date().getTime());
         localStorage.setItem("clock-status", "resume");
         setClockStatus("Resume");
-        let t3 = localStorage.getItem("break-seconds");
+         localStorage.getItem("break-seconds");
         // ! API CALL 
         updateUserClockHandler("resume");
 
         tc3 = setInterval(() => {
-          setBreakClock(++t3);
+          // setBreakClock(++t3);
         }, 1000);
       }
        else if (t === "resume") {

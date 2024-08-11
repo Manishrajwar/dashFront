@@ -60,10 +60,10 @@ function EmployeeProjectTasks() {
           </button>
         </nav>
 
-        <div className="allTasksCont">
-          <div class="relative overflow-x-auto">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <div className="">
+          <div class="relative  overflow-x-auto">
+            <table class="w-full text-sm text-left rtl:text-right  allTasksCont">
+              <thead class="text-xs  uppercase bgadjust ">
                 <tr>
                   <th scope="col" class="px-6 py-3">
                     Title
@@ -87,7 +87,7 @@ function EmployeeProjectTasks() {
                 {allTask?.map((task, index) => (
                   <tr
                     key={index}
-                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                    class=" border-b bgadjust "
                   >
                     <td class="px-6 py-4">{task?.title}</td>
                     <td className="px-6 py-4">
@@ -107,7 +107,7 @@ function EmployeeProjectTasks() {
                           statusChangeHandler(e.target.value, task?._id)
                         }
                         value={task?.status}
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="statusDropdown"
                       >
                         <option value="Not Started">Not Started</option>
                         <option value="Started">Started</option>
