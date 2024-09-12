@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import { makeAuthenticatedDELETERequest, makeAuthenticatedPOSTRequest, makeAuthenticatedPUTRequest } from "../services/serverHelper";
 import { endpoints } from "../services/api";
 import EmployeeProjectTasks from "../Components/DashboardCom/EmployeeProjectTasks";
+import LeaveManagement from "../Components/DashboardCom/LeaveManagement";
 
 
 function Dashboard() {
@@ -88,6 +89,8 @@ function Dashboard() {
             {currentPage === "Create Team" && <CreateTeam />}
 
             {currentPage === "Employee Project Detail" && <EmployeeProjectTasks />}
+
+            {currentPage === "Leave Management" && <LeaveManagement />}
             
           </div>
           
@@ -95,7 +98,7 @@ function Dashboard() {
       </div>
 
       {openInviPop && (
-        <div className="porjepopupWrap popup-overlay">
+        <div className="ShowDetailWrap popup-overlay">
           <div className="createpopcont incheigh popup-content">
             <nav>
               <p>Invitation Notification</p>

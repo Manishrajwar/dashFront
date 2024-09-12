@@ -5,94 +5,14 @@ import trash from "../../Assets/bx-trash-alt.png";
 import edit from "../../Assets/edit.png";
 import { AppContext } from "../../Context/AppContext";
 import toast from "react-hot-toast";
-import { makeAuthenticatedDELETERequest, makeAuthenticatedGETRequest, makeAuthenticatedPOSTRequest, makeAuthenticatedPUTRequest } from "../../services/serverHelper";
+import { makeAuthenticatedDELETERequest } from "../../services/serverHelper";
 import { endpoints } from "../../services/api";
 import { useSelector } from "react-redux";
 
 function ProjectTasks() {
-  const { changeHandler, currentProjectOpen , setCurrProjectOpen } = useContext(AppContext);
-  const [openCreateTask, setOpenCreateTask] = useState(false);
+  const { currentProjectOpen , setCurrProjectOpen , setOpenCreateTask , setIsEdit , getAllProTask , allTask , taskformdata, settaskFormdata} = useContext(AppContext);
   const {accessToken} = useSelector((state)=>state.auth);
-
-  const [formdata, setFormdata] = useState({
-    title: "",
-    description: "",
-    member: "",
-    priority: "Low",
-    dueDate: "",
-  });
-
-  const [allTask, setAllTask]  = useState([]);
- const [isEdit , setIsEdit] = useState(false);
-    
- 
- const cutSet = ()=>{
-  setFormdata({
-    title: "",
-    description: "",
-    member: "",
-    priority: "Low",
-    dueDate: "",
-  });
-  setIsEdit(false);
- }
   
-  const getAllProTask = async()=>{
-    try{
-
-      const resp = await makeAuthenticatedGETRequest(endpoints.GET_ALL_PROJECT_TASK + `/${currentProjectOpen?._id}` , accessToken);
-      if(resp?.success){
-        setAllTask(resp?.allTask );
-      }
-      else {
-        toast.error(resp?.message);
-      }
- 
-    } catch(error){
-       toast.error("Something went wrong , please try again");
-    }
-   }
-
-   const createTaskHandler = async()=>{
-    const toastId = toast.loading("Loading...");
-    try{
-
-      const resp = await makeAuthenticatedPOSTRequest(endpoints.CREATE_TASK_API , {...formdata ,project:currentProjectOpen?._id} , accessToken);
-      if(resp?.success){
-        toast.success("successfuly created");
-        getAllProTask();
-        cutSet();
-      }
-      else {
-        toast.error(resp?.message);
-      }
- 
-    } catch(error){
-       toast.error("Something went wrong , please try again");
-    }
-    toast.dismiss(toastId);
-   }
-
-   const editTaskHandler = async()=>{
-    const toastId = toast.loading("Loading...");
-    try{
-
-      const resp = await makeAuthenticatedPUTRequest(endpoints.UPDATE_TASK_API , {...formdata ,project:currentProjectOpen?._id , taskId:isEdit} , accessToken);
-      if(resp?.success){
-        toast.success("successfuly Updated");
-        getAllProTask();
-        cutSet();
-      }
-      else {
-        toast.error(resp?.message);
-      }
- 
-    } catch(error){
-       toast.error("Something went wrong , please try again");
-    }
-    toast.dismiss(toastId);
-   }
-
    const deletetask = async(taskId)=>{
     const toastId = toast.loading("Loading...");
     try{
@@ -112,7 +32,6 @@ function ProjectTasks() {
     toast.dismiss(toastId);
    }
 
-
   //  go back to the project page protector
   useEffect(() => {
     if (!currentProjectOpen) {
@@ -130,7 +49,7 @@ function ProjectTasks() {
         <nav>
           <h2>Project Task</h2>
            <div className="flex items-center gap-4">
-          <button onClick={() => setOpenCreateTask(true)}> <span>Assign Task</span></button>
+          <button onClick={() => {setOpenCreateTask(true); setIsEdit(false)}}> <span>Assign Task</span></button>
           <img onClick={()=>{setCurrProjectOpen(false)}} src={cross} alt="" />
            </div>
         </nav>
@@ -195,8 +114,8 @@ function ProjectTasks() {
                   setIsEdit(task?._id);
                   const { member, dueDate, ...restTask } = task;
                   setOpenCreateTask(true);
-                  setFormdata({
-                    ...formdata,  
+                  settaskFormdata({
+                    ...taskformdata,  
                     ...restTask,
                     member: member?._id,  
                     dueDate: dueDate ? new Date(dueDate).toISOString().split('T')[0] : "",  
@@ -220,112 +139,6 @@ function ProjectTasks() {
 
       </div>
 
-      {openCreateTask && (
-        <div className="porjepopupWrap">
-
-          <div className="createpopcont incheigh">
-
-            <nav>
-              <p>Assign New Task</p>
-              <img
-                onClick={() => {
-                  setOpenCreateTask(false);
-               
-                  cutSet();
-                }}
-                src={cross}
-                alt="cross"
-              />
-            </nav>
-
-            <hr />
-
-            <form >
-
-              <label>
-                <p>Title </p>
-                <input
-                  onChange={(e) => {
-                    changeHandler(e, setFormdata);
-                  }}
-                  value={formdata?.title}
-                  name="title"
-                  type="text"
-                  required
-                  placeholder="Task Title"
-                />
-              </label>
-
-              <label>
-                <p>Assign To </p>
-                <select
-                  name="member"
-                  required
-                  onChange={(e) => changeHandler(e, setFormdata)}
-                  value={formdata.member}
-                  id=""
-                >
-                  <option value="Select">Select</option>
-                  {currentProjectOpen?.Members?.map((mem, index) => (
-                    <option value={mem?._id} key={index}>
-                      {mem?.fullName}
-                    </option>
-                  ))}
-                </select>
-              </label>
-
-              <label>
-                <p>due Date </p>
-                <input
-                  onChange={(e) => {
-                    changeHandler(e, setFormdata);
-                  }}
-                  required
-                  value={formdata?.dueDate}
-                  name="dueDate"
-                  type="date"
-                />
-              </label>
-
-              <label>
-                <p>Priority</p>
-                <select
-                required
-                  name="priority"
-                  onChange={(e) => changeHandler(e, setFormdata)}
-                  value={formdata.priority}
-                >
-                  <option value="Low">Low</option>
-                  <option value="Medium">Medium</option>
-                  <option value="High">High</option>
-                </select>
-              </label>
-
-              <label>
-                <p>Description </p>
-            <textarea name="description" onChange={(e)=>changeHandler(e , setFormdata)} value={formdata.description} ></textarea>
-              </label>
-
-              <div className="createbtns">
-
-              <button onClick={(e)=>{
-                e.preventDefault();
-               if(isEdit){
-                editTaskHandler();
-               }
-               else{
-                 createTaskHandler();
-                }
-              }}>{isEdit?"Save":"Assign"}</button>
-
-              </div>
-
-            </form>
-
-          </div>
-
-        </div>
-      )}
     </>
   );
 }

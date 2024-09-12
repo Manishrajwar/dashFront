@@ -30,7 +30,11 @@ const allStatus = ["All", "Ongoing", "Fininsh", "Onhold"];
 function ProjectDash() {
   const [currentStatus, setCurrentStatus] = useState("All");
   const { accessToken } = useSelector((state) => state.auth);
-  const { myTeam, changeHandler , currentProjectOpen  , setCurrProjectOpen , openOverview , setOpenOverview} = useContext(AppContext);
+  const { myTeam, changeHandler , currentProjectOpen , taskformdata, settaskFormdata , setOpenCreateTask ,openCreateTask , setIsEdit , isEdit , setCurrProjectOpen , openOverview , setOpenOverview , getAllProTask} = useContext(AppContext);
+ 
+
+  console.log("taskform ",currentProjectOpen);
+
 
   const [showCretePop, setShowCreatePop] = useState(false);
   const [inviteForm, setInviteForm] = useState(false);
@@ -61,6 +65,20 @@ function ProjectDash() {
     email:"" , title:""
   });
 
+  
+    
+ 
+ const cutSet = ()=>{
+  setFormdata({
+    title: "",
+    description: "",
+    member: "",
+    priority: "Low",
+    dueDate: "",
+  });
+  setIsEdit(false);
+ }
+  
   const getProjects = async () => {
     const resp = await makeAuthenticatedGETRequest(
       endpoints.GET_ADMIN_PROJECT_API,
@@ -163,6 +181,46 @@ function ProjectDash() {
 
   }
 
+  const createTaskHandler = async()=>{
+    const toastId = toast.loading("Loading...");
+    try{
+
+      const resp = await makeAuthenticatedPOSTRequest(endpoints.CREATE_TASK_API , {...taskformdata ,project:currentProjectOpen?._id} , accessToken);
+      if(resp?.success){
+        toast.success("successfuly created");
+        getAllProTask();
+        cutSet();
+      }
+      else {
+        toast.error(resp?.message);
+      }
+ 
+    } catch(error){
+       toast.error("Something went wrong , please try again");
+    }
+    toast.dismiss(toastId);
+   }
+
+   const editTaskHandler = async()=>{
+    const toastId = toast.loading("Loading...");
+    try{
+
+      const resp = await makeAuthenticatedPUTRequest(endpoints.UPDATE_TASK_API , {...taskformdata ,project:currentProjectOpen?._id , taskId:isEdit} , accessToken);
+      if(resp?.success){
+        toast.success("successfuly Updated");
+        getAllProTask();
+        cutSet();
+      }
+      else {
+        toast.error(resp?.message);
+      }
+ 
+    } catch(error){
+       toast.error("Something went wrong , please try again");
+    }
+    toast.dismiss(toastId);
+   }
+
   useEffect(() => {
     getProjects();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -259,6 +317,17 @@ function ProjectDash() {
                     <p> Invite Employee</p>
                   </div>
 
+                  <div 
+                 onClick={() => {
+                  setOpenCreateTask(true)
+                  setIsEdit(false);
+                 }}
+                    className="cursor-pointer"
+                  >
+                    <img src={userplus} alt="userplus" />{" "}
+                    <p> Assign Task</p>
+                  </div>
+
                   <div className="cursor-pointer"
                     onClick={() => {
                       setIsProjectEdit(project?._id);
@@ -277,10 +346,7 @@ function ProjectDash() {
                     <img src={edit} alt="" /> <p> Edit</p>
                   </div>
 
-                  <div className="cursor-pointer">
-                    <img src={share} alt="" /> <p> Share To Clients</p>
-                  </div>
-
+              
                   <div className="cursor-pointer" onClick={() => deleteProject(project?._id)}>
                     <img src={deleteuser} alt="" /> <p> Delete</p>
                   </div>
@@ -300,11 +366,14 @@ function ProjectDash() {
       {/* this is cretae project popup  */}
 
       {showCretePop && (
-        <div className="porjepopupWrap popup-overlay">
+        <div className="ShowDetailWrap popup-overlay">
           <div className="createpopcont incheigh  popup-content">
 
             <nav>
-              <p>Create New Project</p>
+               {
+                isProjectEdit ? 
+                <p>Edit Project</p>:  <p>Create New Project</p>
+               }
               <img
                 onClick={() => {
                   setIsProjectEdit(null);
@@ -344,38 +413,6 @@ function ProjectDash() {
                   placeholder="Due Date"
                 />
               </label>
-
-              {/* <label htmlFor="">
-                <p>Employee </p>
-
-                <div className="allpageallow">
-                  {formdata?.Members?.map((item, index) => (
-                    <div key={index} className="singlepageallow">
-                      {item}{" "}
-                      <img
-                        onClick={() => removeItem(item)}
-                        src={alpha}
-                        className="cursor-pointer"
-                        alt=""
-                      />
-                    </div>
-                  ))}
-                </div>
-
-                <select
-                  onChange={changeHandler2}
-                  value={formdata?.Members}
-                  name="Members"
-                  id=""
-                >
-                  <option value="Select">Select Employee</option>
-                  {myTeam?.Members?.map((mem, index) => (
-                    <option key={index} value={mem?._id}>
-                      {mem?.fullName}
-                    </option>
-                  ))}
-                </select>
-              </label> */}
 
               <label htmlFor="">
                 <p>Description </p>
@@ -419,7 +456,7 @@ function ProjectDash() {
       )}
 
       {inviteForm && (
-        <div className="porjepopupWrap popup-overlay">
+        <div className="ShowDetailWrap popup-overlay">
           <div className="createpopcont incheigh   popup-content">
 
             <nav>
@@ -491,6 +528,116 @@ function ProjectDash() {
           <ProjectTasks  />
            
           </div>
+        </div>
+      )}
+
+{openCreateTask && (
+        <div className="ShowDetailWrap popup-overlay">
+
+          <div className="createpopcont incheigh">
+
+            <nav>
+              {
+                isEdit ?  <p>Update Task</p> :
+                <p>Assign New Task</p>
+              }
+              <img
+                onClick={() => {
+                  setOpenCreateTask(false);
+               
+                  cutSet();
+                }}
+                src={cross}
+                alt="cross"
+              />
+            </nav>
+
+            <hr />
+
+            <form >
+
+              <label>
+                <p>Title </p>
+                <input
+                  onChange={(e) => {
+                    changeHandler(e, settaskFormdata);
+                  }}
+                  value={taskformdata?.title}
+                  name="title"
+                  type="text"
+                  required
+                  placeholder="Task Title"
+                />
+              </label>
+
+              <label>
+                <p>Assign To </p>
+                <select
+                  name="member"
+                  required
+                  onChange={(e) => changeHandler(e, settaskFormdata)}
+                  value={taskformdata.member}
+                  id=""
+                >
+                  <option value="Select">Select</option>
+                  {currentProjectOpen?.Members?.map((mem, index) => (
+                    <option value={mem?._id} key={index}>
+                      {mem?.fullName}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label>
+                <p>due Date </p>
+                <input
+                  onChange={(e) => {
+                    changeHandler(e, settaskFormdata);
+                  }}
+                  required
+                  value={taskformdata?.dueDate}
+                  name="dueDate"
+                  type="date"
+                />
+              </label>
+
+              <label>
+                <p>Priority</p>
+                <select
+                required
+                  name="priority"
+                  onChange={(e) => changeHandler(e,settaskFormdata)}
+                  value={settaskFormdata.priority}
+                >
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                </select>
+              </label>
+
+              <label>
+                <p>Description </p>
+            <textarea name="description" onChange={(e)=>changeHandler(e , settaskFormdata)} value={taskformdata.description} ></textarea>
+              </label>
+
+              <div className="createbtns">
+
+              <button onClick={(e)=>{
+                e.preventDefault();
+               if(isEdit){
+                editTaskHandler();
+               }
+               else{
+                 createTaskHandler();
+                }
+              }}>{isEdit?"Save":"Assign"}</button>
+
+              </div>
+
+            </form>
+
+          </div>
+
         </div>
       )}
 

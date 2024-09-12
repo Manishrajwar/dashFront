@@ -1,9 +1,10 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeAuthenticatedGETRequest, makeAuthenticatedPOSTRequest } from "../services/serverHelper";
 import { endpoints } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { setAccessToken, setUser } from "../reducer/slices/authSlice";
+import toast from "react-hot-toast";
 
 
 export const AppContext = createContext();
@@ -22,6 +23,8 @@ export default function AppContextProvider({ children }) {
   const [openInviPop , setOpenInviPop] = useState(false);
   const [openNotification , setOpenNotification] = useState(false);
   const [notSeenNotification , setNotSeenNotification] = useState(0);
+  const [openCreateTask, setOpenCreateTask] = useState(false);
+
 
    const [allInvitation , setAllInvitation] = useState([]);
    const [allNotification , setAllNotification] = useState([]);
@@ -36,8 +39,21 @@ export default function AppContextProvider({ children }) {
    const [calendervalue, onChange] = useState(new Date());
 
    const [myTeam, setMyTeam] = useState({});
+   const [allTask, setAllTask]  = useState([]);
+   const [isEdit , setIsEdit] = useState(false);
+   const [activeUser , setActiveUser] = useState([]);
+
+   const[allPage , setAllPage] = useState([]);
 
    const [calenderEvents , setCalenderEvents] = useState();
+
+   const [taskformdata, settaskFormdata] = useState({
+    title: "",
+    description: "",
+    member: "",
+    priority: "Low",
+    dueDate: "",
+  });
 
   const fetchCalenderEvents = async()=>{
      const resp = await makeAuthenticatedGETRequest(endpoints.GET_MY_EVENTS_API , accessToken);
@@ -124,6 +140,39 @@ export default function AppContextProvider({ children }) {
      setCurrentTimer(resp?.data[0]);
   };
 
+
+  const getAllProTask = async()=>{
+    try{
+
+      const resp = await makeAuthenticatedGETRequest(endpoints.GET_ALL_PROJECT_TASK + `/${currentProjectOpen?._id}` , accessToken);
+      if(resp?.success){
+        setAllTask(resp?.allTask );
+      }
+      
+    } catch(error){
+       toast.error("Something went wrong , please try again");
+    }
+   }
+
+   const getActiveUsers = async(e)=>{
+    const resp = await makeAuthenticatedGETRequest(endpoints.GET_TEAM_ACTIVEUSERS_API , accessToken);
+    console.log("resp ",resp);
+    setActiveUser(resp?.data);
+ }
+
+ const getAllPages = async()=>{
+  const resp = await makeAuthenticatedGETRequest(endpoints.GET_APP_PAGES_API , accessToken);
+  setAllPage(resp?.allPages);
+ }
+
+
+ useEffect(()=>{
+   if(user?.teamId){
+     getActiveUsers();
+    }
+   getAllPages();
+ },[])
+
   useEffect(()=>{
      if(accessToken){
        fetchUserDetails();
@@ -142,7 +191,7 @@ export default function AppContextProvider({ children }) {
   },[accessToken])  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(()=>{
-       if(allInvitation.length > 0 ){
+       if(allInvitation?.length > 0 ){
         setOpenInviPop(true);
        }else{
         setOpenInviPop(false);
@@ -152,30 +201,24 @@ export default function AppContextProvider({ children }) {
   
   useEffect(()=>{
     const currentPage =  sessionStorage.getItem("currentPage");
-
-    if(user?.accountType === 'Employee'){
-
-      setDashAllowPage(user?.dashboardAllow);
-       if(currentPage && user.dashboardAllow.includes(currentPage)){
-         setCurrPage(currentPage);
+      
+       setDashAllowPage(user?.dashboardAllow);
+       if(currentPage){
+        const isPresent = user?.dashboardAllow?.filter((e)=> e?.name == currentPage);
+         if(isPresent?.length > 0){
+            setCurrPage(currentPage);
+         }
+         else {
+          // setCurrPage(user?.dashboardAllow[0]?.name);
+         }
        }
        else {
-         setCurrPage(user?.dashboardAllow[0]);
-         sessionStorage.setItem("currentPage" , user?.dashboardAllow[0]);
+        // setCurrPage(user?.dashboardAllow[0]?.name);
        }
-    } else{
-      setDashAllowPage(elements);
 
-       if(currentPage && elements.includes(currentPage)){
-         
-         setCurrPage(currentPage);
-       }
-       else {
+    
+    
 
-         setCurrPage(elements[0]);
-         sessionStorage.setItem("currentPage" , elements[0]);
-       }
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[user])  // eslint-disable-next-line react-hooks/exhaustive-deps
 
@@ -187,10 +230,8 @@ export default function AppContextProvider({ children }) {
   },[openNotification])  // eslint-disable-next-line react-hooks/exhaustive-deps
 
 
-
-
   const value = {
-    changeHandler   ,setCurrPage , currentPage , currentProjectOpen , setCurrProjectOpen  ,fetchUserDetails ,logoutHandler ,user  ,dashAllowPage , fetchTeamDetails , myTeam , setMyTeam ,setOpenInviPop , openInviPop , allInvitation , setAllInvitation , allNotification , setAllNotification , openNotification , setOpenNotification , notSeenNotification , fetchNotification , openOverview , setOpenOverview , fetchClockInDetails , currentTimer , setCurrentTimer  ,calendervalue, onChange , calenderEvents , setCalenderEvents , fetchCalenderEvents , selectedEvent , setSelectedEvent
+    changeHandler   ,setCurrPage , currentPage , currentProjectOpen , setCurrProjectOpen  ,fetchUserDetails ,logoutHandler ,user  ,dashAllowPage , fetchTeamDetails , myTeam , setMyTeam ,setOpenInviPop , openInviPop , allInvitation , setAllInvitation , allNotification , setAllNotification , openNotification , setOpenNotification , notSeenNotification , fetchNotification , openOverview , setOpenOverview , fetchClockInDetails , currentTimer , setCurrentTimer  ,calendervalue, onChange , calenderEvents , setCalenderEvents , fetchCalenderEvents ,allTask, setAllTask , isEdit , setIsEdit ,  selectedEvent , setSelectedEvent , openCreateTask, setOpenCreateTask ,getAllProTask , taskformdata, settaskFormdata , activeUser , allPage , setAllPage
   };
 
 

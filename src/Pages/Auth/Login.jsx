@@ -36,7 +36,8 @@ const Login = () => {
       }
 
   const submitHandler = async(e)=>{
-    e.preventDefault();
+    const toastId = toast.loading('Loading...');
+        e.preventDefault();
     try{
 
       let resp;
@@ -52,6 +53,9 @@ const Login = () => {
              localStorage.setItem("accessToken" , JSON.stringify(resp?.token));
              localStorage.setItem("user" ,JSON.stringify(resp?.user));
              navigate("/dashboard");
+            }
+            else {
+            toast.error(resp.message);
             }
           }
           else {
@@ -90,6 +94,7 @@ setFormdata((prev)=>({
        console.log(error);
 
     }
+    toast.dismiss(toastId);
   }
 
   return (

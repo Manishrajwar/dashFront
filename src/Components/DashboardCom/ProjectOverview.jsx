@@ -20,12 +20,12 @@ function ProjectOverview() {
   useEffect(()=>{
  if(openOverview){
      const task = openOverview?.task;
-     let totalTasks = task.length;
-      if(task.length > 0){
-          const Done = task.filter((t)=>t.status === "Done").length;
-          const NotStarted = task.filter((t)=>t.status === "Not Started").length;
-          const Pending = task.filter((t)=>t.status === "Pending").length;
-          const started = task.filter((t)=>t.status === "Started").length;
+     let totalTasks = task?.length;
+      if(task?.length > 0){
+          const Done = task.filter((t)=>t.status === "Done")?.length;
+          const NotStarted = task.filter((t)=>t.status === "Not Started")?.length;
+          const Pending = task.filter((t)=>t.status === "Pending")?.length;
+          const started = task.filter((t)=>t.status === "Started")?.length;
            // Calculate the percentage of done tasks
   const donePercentage = (Done / totalTasks) * 100;
 

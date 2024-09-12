@@ -54,10 +54,7 @@ function EmployeeProjectTasks() {
       <div className="proTaskCont">
         <nav>
           <h2>Project Task</h2>
-          <button>
-            {" "}
-            <span>Assign Task</span>
-          </button>
+        
         </nav>
 
         <div className="">

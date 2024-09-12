@@ -94,7 +94,6 @@ export const makeAuthenticatedGETRequest = async (route , token) => {
 
 // ! update request
 export const makeAuthenticatedUPDATERequest = async (route , body , token) => {
-  console.log(body);
   try {
     const response = await fetch(route, {
       method: "PUT",
@@ -134,7 +133,6 @@ export const makeAuthenticatedUPDATEWITHOUTRequest = async (route, formData, tok
 
 // ! update request
 export const makeAuthenticatedPUTRequest = async (route , body , token) => {
-  console.log(`body` , body);
   try {
     const response = await fetch(route, {
       method: "PUT",

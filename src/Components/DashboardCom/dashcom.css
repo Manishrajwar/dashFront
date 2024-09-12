@@ -463,7 +463,7 @@ color: #1B2533;
 
 .porjepopupWrap{
   position: absolute;
-  width: 100vh;
+  width: 100vh !important;
   height: 100%;
   top: 0;
   left: 0;
@@ -474,7 +474,9 @@ color: #1B2533;
   justify-content: center;
   background-color: #4040404D;
   z-index: 80;
+  overflow: hidden;
 }
+
 
 .ShowDetailWrap{
   position: absolute;
@@ -487,15 +489,21 @@ color: #1B2533;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 20;
   background-color: #4040404D;
 }
 
+.taskwraps{
+width: 100vh;
+height: 100vh;
+position: absolute;
+background-color: red;
+}
 
 .createpopcont{
   max-width: 599px;
-max-height: 492px;
+height: fit-content;
 width: 100%;
-height: 100%;
 padding: 24px;
 display: flex;
 flex-direction: column;
@@ -503,11 +511,48 @@ gap: 16px;
 background-color: white;
 border-radius: 18px ;
 }
+.increwithheight{
+  max-width: 95vw;
+  max-height: none;
+  height: fit-content;
+
+  
+}
+
+.openActiveCont{
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.singleactUser{
+  max-width: 250px;
+  width: 100%;
+height:  212px;
+border-radius: 12px ;
+background: #FFFFFF;
+border: 1px solid #E8E9EB;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 20px;
+padding: 10px 10px;
+}
+.actemail{
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
+  letter-spacing: 0.0015em;
+color: #1B2533;    
+}
 .incheigh{
-  /* min-height: 492px  !important; */
-  /* max-height: none ; */
   height: fit-content !important;
   overflow-y: scroll !important;
+}
+.addcolor{
+  color:#A62B00;
 }
 
 .incheighWidth{
@@ -518,7 +563,7 @@ border-radius: 18px ;
   overflow-y: scroll !important;
 }
 .increheight{
-  max-height: 570px !important;
+  /* max-height: 570px !important; */
 }
 
 .createpopcont nav{
@@ -817,6 +862,7 @@ color: #666D76;
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .singlepageallow{

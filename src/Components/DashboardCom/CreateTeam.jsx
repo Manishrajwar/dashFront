@@ -4,6 +4,7 @@ import "./dashcom.css";
 import cross from "../../Assets/cross.png";
 import { AppContext } from "../../Context/AppContext";
 import {
+  makeAuthenticatedDELETERequest,
   makeAuthenticatedPOSTRequest,
   makeAuthenticatedPUTRequest,
 } from "../../services/serverHelper";
@@ -19,7 +20,7 @@ import useOnClickOutside from "../../Hooks/useOnClickOutside";
 
 
 function CreateTeam() {
-  const { changeHandler, user  , fetchTeamDetails , myTeam } = useContext(AppContext);
+  const { changeHandler, user  , fetchTeamDetails , myTeam  , allPage , fetchUserDetails} = useContext(AppContext);
   const { accessToken } = useSelector((state) => state.auth);
 
   const [teamIdFrom, setOpenTeamidfrm] = useState(false);
@@ -96,6 +97,7 @@ function CreateTeam() {
     if (resp.status) {
       toast.success("Successfuly Created");
       setOpenTeamidfrm(false);
+      fetchTeamDetails();
     } else {
       toast.error(resp.message);
     }
@@ -130,6 +132,7 @@ function CreateTeam() {
        fetchTeamDetails();
        setIsEdit(false);
        setOpenTeamidfrm(false);
+       fetchUserDetails();
       }
       else {
         toast.error(resp?.message);
@@ -164,6 +167,17 @@ function CreateTeam() {
     toast.dismiss(toastId);
   };
 
+  const removeMem = async(id)=>{
+    const toastId = toast.loading("Loading...");
+    const resp = await makeAuthenticatedDELETERequest(endpoints.REMOVE_USER_FROMTEAM_API + `/${id}` , accessToken);
+    if(resp.success){
+      toast.success("Successfuly removed");
+      fetchTeamDetails();
+      setShowOption(false);
+    }
+    toast.dismiss(toastId);
+  }
+
   useEffect(() => {
     fetchTeamDetails();
  
@@ -176,6 +190,7 @@ function CreateTeam() {
   return (
     <>
       <div className="dashwrap2">
+
         <nav>
           <div className="ctnav1">
             <h2 className="commonh2">Create Team </h2>
@@ -257,7 +272,7 @@ function CreateTeam() {
 
                      <hr />
 
-                     <label htmlFor="edit">
+                     <label onClick={()=>removeMem(mem?._id)} htmlFor="edit">
                       <img src={trash} alt="" />
                       <span>Remove</span>
                      </label>
@@ -270,11 +285,11 @@ function CreateTeam() {
             ))}
           </div>
         )}
-      </div>
+   
 
       {openAddTeam && (
-        <div className="porjepopupWrap">
-          <div className="createpopcont">
+        <div className="ShowDetailWrap popup-overlay">
+          <div className="createpopcont popup-content">
             <nav>
               <p> Add Team Member</p>
               <img onClick={() => setOpenTeam(false)} src={cross} alt="" />
@@ -327,8 +342,8 @@ function CreateTeam() {
       )}
 
       {teamIdFrom && (
-        <div className="porjepopupWrap">
-          <div className="createpopcont">
+        <div className="ShowDetailWrap popup-overlay">
+          <div className="createpopcont popup-content">
             <nav>
               {
                 isTeamEdit? <p> EDIT TEAM</p> : <p>CREATE TEAM</p>
@@ -373,7 +388,7 @@ function CreateTeam() {
                 <div className="allpageallow">
                   {teamId.dashboardAllow.map((item, index) => (
                     <div key={index} className="singlepageallow">
-                      {item}{" "}
+                      {item}
                       <img onClick={() => removeItem(item)} src={alpha} className="cursor-pointer" alt="" />
                     </div>
                   ))}
@@ -385,12 +400,15 @@ function CreateTeam() {
                   onChange={(e) => changeHandler2(e)}
                   id="dashboardAllow"
                 >
-                  <option value="Select" disabled>
-                    Select Page Allow
-                  </option>
-                  <option value="Dashboard">Dashboard</option>
-                  <option value="Project">Project</option>
+                  <option value="Select" disabled>  Select Page Allow</option>
+      {
+        allPage?.map((opt , index)=>(
+          <option value={opt._id} key={index}>{opt?.name}</option>
+        ))
+      }
+                 
                 </select>
+
               </label>
 
               <button
@@ -415,8 +433,9 @@ function CreateTeam() {
 
       {
         editMemberForm && 
-        <div className="porjepopupWrap">
-        <div className="createpopcont increheight">
+        <div className="ShowDetailWrap popup-overlay">
+
+        <div className="createpopcont increheight popup-content">
 
           <nav>
             <p> Edit TEAM MEMBER  </p>
@@ -508,8 +527,11 @@ function CreateTeam() {
           </form>
 
         </div>
+
       </div>
       }
+
+</div>
     </>
   );
 }

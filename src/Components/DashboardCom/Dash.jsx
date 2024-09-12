@@ -13,16 +13,18 @@ import "./dashcom.css";
 import Timer from "./Timer";
 import { useSelector } from "react-redux";
 import Calender from "../Common/Calender";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../Context/AppContext";
 import { makeAuthenticatedPOSTRequest } from "../../services/serverHelper";
 import { endpoints } from "../../services/api";
 import toast from "react-hot-toast";
+import Avatar from "react-avatar";
 
 function Dash() {
   const { user, accessToken } = useSelector((state) => state.auth);
-  const { currentTimer, calendervalue, changeHandler   , fetchCalenderEvents  ,selectedEvent } = useContext(AppContext);
+  const { currentTimer, calendervalue, changeHandler   , fetchCalenderEvents  ,selectedEvent ,activeUser } = useContext(AppContext);
 
+  const [openActive , setOpenActive] = useState(false);
   const [createEvent, setCreateEvent] = useState(false);
 
   const [eventDetail, setEventDetails] = useState({
@@ -58,6 +60,7 @@ function Dash() {
 
      toast.dismiss(toastId);
   };
+
 
   return (
     <>
@@ -116,14 +119,17 @@ function Dash() {
           }}
         >
           <SwiperSlide>
-            <div className="singleKnow knowGreen">
+            <div onClick={()=>{setOpenActive(true)}} className="singleKnow knowGreen">
+
               <div className="right">
                 <img src={Frame96} alt="" />
                 <p className="samepara">Active Employee</p>
               </div>
+
               <div className="kowSol">
-                <p className="samepara">12</p>
+                <p className="samepara">{activeUser?.length}</p>
               </div>
+
             </div>
           </SwiperSlide>
 
@@ -242,11 +248,13 @@ function Dash() {
                }
             
           </div>
+          
         </div>
+
       </div>
 
       {createEvent && (
-        <div className="porjepopupWrap popup-overlay">
+        <div className="ShowDetailWrap popup-overlay">
           <div className="createpopcont incheigh popup-content">
             <nav>
               <p>Create Event</p>
@@ -312,6 +320,43 @@ function Dash() {
           </div>
         </div>
       )}
+
+{openActive && (
+        <div className="ShowDetailWrap popup-overlay">
+          <div className="createpopcont increwithheight popup-content">
+
+            <nav>
+              <p>Create Event</p>
+              <img
+                onClick={() => {
+                  setOpenActive(false);
+                }}
+                src={cross}
+                alt="cross" className="cursor-pointer"
+              />
+            </nav>
+
+            <hr />
+
+            <div className="openActiveCont">
+
+              {
+                activeUser?.map((act , index)=>(
+                  <div key={index} className="singleactUser">
+                         <Avatar name="Foo Bar" className="empavatar" />
+                          <p className="actemail">{act?.fullName}</p>
+                          <p className="actemail addcolor">{act?.timerDetail?.status === "resume" ? 'Break':"Active"}</p>
+                  </div>
+                ))
+              }
+             
+            </div>
+
+          </div>
+        </div>
+      )}
+   
+
     </>
   );
 }
