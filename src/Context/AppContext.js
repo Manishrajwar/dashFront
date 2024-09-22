@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeAuthenticatedGETRequest, makeAuthenticatedPOSTRequest } from "../services/serverHelper";
 import { endpoints } from "../services/api";
@@ -11,8 +11,6 @@ export const AppContext = createContext();
 
 
 export default function AppContextProvider({ children }) {
-
-  const elements = ["Dashboard", "Project","Create Team"];
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -171,6 +169,8 @@ export default function AppContextProvider({ children }) {
      getActiveUsers();
     }
    getAllPages();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
  },[])
 
   useEffect(()=>{
@@ -204,7 +204,7 @@ export default function AppContextProvider({ children }) {
       
        setDashAllowPage(user?.dashboardAllow);
        if(currentPage){
-        const isPresent = user?.dashboardAllow?.filter((e)=> e?.name == currentPage);
+        const isPresent = user?.dashboardAllow?.filter((e)=> e?.name === currentPage);
          if(isPresent?.length > 0){
             setCurrPage(currentPage);
          }

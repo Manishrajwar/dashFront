@@ -6,7 +6,6 @@ import cross from "../../Assets/cross.png";
 import userplus from "../../Assets/bx-user-plus.png";
 import edit from "../../Assets/edit.png";
 import deleteuser from "../../Assets/bx-trash-alt.png";
-import share from "../../Assets/bx-share-alt.png";
 import useOnClickOutside from "../../Hooks/useOnClickOutside";
 import { FaLocationArrow } from "react-icons/fa";
 import ProjectTasks from "../DashboardCom/ProjectTasks"
@@ -32,9 +31,6 @@ function ProjectDash() {
   const { accessToken } = useSelector((state) => state.auth);
   const { myTeam, changeHandler , currentProjectOpen , taskformdata, settaskFormdata , setOpenCreateTask ,openCreateTask , setIsEdit , isEdit , setCurrProjectOpen , openOverview , setOpenOverview , getAllProTask} = useContext(AppContext);
  
-
-  console.log("taskform ",currentProjectOpen);
-
 
   const [showCretePop, setShowCreatePop] = useState(false);
   const [inviteForm, setInviteForm] = useState(false);

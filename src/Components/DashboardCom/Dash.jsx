@@ -13,7 +13,7 @@ import "./dashcom.css";
 import Timer from "./Timer";
 import { useSelector } from "react-redux";
 import Calender from "../Common/Calender";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../../Context/AppContext";
 import { makeAuthenticatedPOSTRequest } from "../../services/serverHelper";
 import { endpoints } from "../../services/api";
@@ -26,6 +26,9 @@ function Dash() {
 
   const [openActive , setOpenActive] = useState(false);
   const [createEvent, setCreateEvent] = useState(false);
+  const [openLeaveReq , setOpenLeaveReq] = useState(false);
+  const [openTotalEmp , setopenTotalEmp] = useState(false);
+
 
   const [eventDetail, setEventDetails] = useState({
     title: "",
@@ -134,7 +137,7 @@ function Dash() {
           </SwiperSlide>
 
           <SwiperSlide>
-            <div className="singleKnow knowRed">
+            <div onClick={()=>setOpenLeaveReq(true)} className="singleKnow knowRed">
               <div className="right">
                 <img src={frame97} alt="" />
                 <p className="samepara">Leave Request</p>
@@ -158,7 +161,7 @@ function Dash() {
           </SwiperSlide>
 
           <SwiperSlide>
-            <div className="singleKnow knowBlue">
+            <div onClick={()=>setopenTotalEmp(true)}  className="singleKnow knowBlue">
               <div className="right">
                 <img src={Frame98} alt="" />
                 <p className="samepara">Total Employee</p>
@@ -326,7 +329,7 @@ function Dash() {
           <div className="createpopcont increwithheight popup-content">
 
             <nav>
-              <p>Create Event</p>
+              <p>Active Employees ({activeUser?.length > 0 ? activeUser?.length: 0})</p>
               <img
                 onClick={() => {
                   setOpenActive(false);
@@ -340,21 +343,107 @@ function Dash() {
 
             <div className="openActiveCont">
 
-              {
+           
+            { activeUser?.length > 0 ? 
                 activeUser?.map((act , index)=>(
                   <div key={index} className="singleactUser">
                          <Avatar name="Foo Bar" className="empavatar" />
                           <p className="actemail">{act?.fullName}</p>
+                          <p className="actemail">{act?.email}</p>
                           <p className="actemail addcolor">{act?.timerDetail?.status === "resume" ? 'Break':"Active"}</p>
                   </div>
                 ))
-              }
+              
+: <span>No user  Found</span>
+            }
              
             </div>
 
           </div>
         </div>
       )}
+
+
+{openLeaveReq && (
+        <div className="ShowDetailWrap popup-overlay">
+          <div className="createpopcont increwithheight popup-content">
+
+            <nav>
+              <p>Leave Requests ({activeUser?.length > 0 ? activeUser?.length: 0})</p>
+              <img
+                onClick={() => {
+                  setOpenLeaveReq(false);
+                }}
+                src={cross}
+                alt="cross" className="cursor-pointer"
+              />
+            </nav>
+
+            <hr />
+
+            <div className="openActiveCont">
+
+           
+            { activeUser?.length > 0 ? 
+                activeUser?.map((act , index)=>(
+                  <div key={index} className="singleactUser">
+                         <Avatar name="Foo Bar" className="empavatar" />
+                          <p className="actemail">{act?.fullName}</p>
+                          <p className="actemail">{act?.email}</p>
+                          <p className="actemail addcolor">{act?.timerDetail?.status === "resume" ? 'Break':"Active"}</p>
+                  </div>
+                ))
+              
+: <span>No user  Found</span>
+            }
+             
+            </div>
+
+          </div>
+        </div>
+      )}
+
+
+{openTotalEmp && (
+        <div className="ShowDetailWrap popup-overlay">
+          <div className="createpopcont increwithheight popup-content">
+
+            <nav>
+              <p>Total Employees ({activeUser?.length > 0 ? activeUser?.length: 0})</p>
+              <img
+                onClick={() => {
+                  setopenTotalEmp(false);
+                }}
+                src={cross}
+                alt="cross" className="cursor-pointer"
+              />
+            </nav>
+
+            <hr />
+
+            <div className="openActiveCont">
+
+           
+            { activeUser?.length > 0 ? 
+                activeUser?.map((act , index)=>(
+                  <div key={index} className="singleactUser">
+                         <Avatar name="Foo Bar" className="empavatar" />
+                          <p className="actemail">{act?.fullName}</p>
+                          <p className="actemail">{act?.email}</p>
+                          <p className="actemail addcolor">{act?.timerDetail?.status === "resume" ? 'Break':"Active"}</p>
+                  </div>
+                ))
+              
+: <span>No user  Found</span>
+            }
+             
+            </div>
+
+          </div>
+        </div>
+      )}
+
+
    
 
     </>

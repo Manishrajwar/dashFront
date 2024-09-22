@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import "./task.css";
 import cross from "../../Assets/cross.png";
 import trash from "../../Assets/bx-trash-alt.png";
