@@ -1,8 +1,8 @@
 // const BASE_URL = process.env.REACT_APP_BASE_URL
 
 
-// const baseurl = "http://localhost:4000/api/v1"
-const baseurl = "https://dashback-4.onrender.com/api/v1"
+const baseurl = "http://localhost:4000/api/v1"
+// const baseurl = "https://dashback-4.onrender.com/api/v1"
 
 
 // AUTH ENDPOINTS
